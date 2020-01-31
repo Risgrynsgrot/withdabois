@@ -20,7 +20,11 @@ function CreatePlayer(id, x, y)
   p.color = colors[p.colorIndex]
   
   p.GetInput = function(self)
-    return joystick:isDown(self.id)
+    if  (joystick ~= nil) then
+      return joystick:isDown(self.id)
+    else
+      return false
+    end
   end
   
   p.Draw = function(self)
