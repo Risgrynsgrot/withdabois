@@ -5,6 +5,7 @@ local sm = require("StateManager")
 height = 720
 width = 1280
 
+
 function love.load()
   joystick = love.joystick.getJoysticks()[1]
   PlayerManager:Init()

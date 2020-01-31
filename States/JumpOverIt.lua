@@ -20,4 +20,12 @@ state.Draw = function(self)
   PlayerManager:Draw()
 end
 
+state.OnEnter = function()
+  
+end
+
+state.OnLeave = function()
+  
+end
+
 return state
