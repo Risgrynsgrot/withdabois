@@ -15,7 +15,7 @@ local bombPosition = { x = 0, y = 0}
 local bombIndex = 1
 local bombBlown = false
 local bombRadius = 30
-local bombSpeed = 100
+local bombSpeed = 10
 local Explode = function()
 	for k,p in ipairs(PlayerManager:GetPlayers()) do
 		if bombIndex ~= k then
@@ -60,7 +60,10 @@ state.Draw = function(self)
 
   	if bombBlown == false then
   		love.graphics.circle("fill", bombPosition.x, bombPosition.y, bombRadius, 16)
+  	else
+  		love.graphics.print("BOOM", 1280/2, 720/2, 0, 1, 1, 0, 0, 0, 0)
   	end
+
 end
 
 return state
