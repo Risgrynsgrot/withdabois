@@ -1,6 +1,10 @@
+require("CreatePlayer")
+PlayerManager = require("PlayerManager")
 local sm = require("StateManager")
 
 function love.load()
+  joystick = love.joystick.getJoysticks()[1]
+  PlayerManager:Init()
   sm:Init()
 end
 

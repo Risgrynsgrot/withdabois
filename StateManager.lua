@@ -8,7 +8,9 @@ stateManager.Init = function(self)
 end
 
 stateManager.Update = function(self, dt)
-  self.states[self.currentState]:Update(dt)
+  if (self.states[self.currentState]:Update(dt)) then
+    self.currentState = love.math.random(#self.states)
+  end
 end
 
 stateManager.Draw = function(self)
