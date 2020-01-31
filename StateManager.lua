@@ -1,10 +1,11 @@
 local stateManager = {}
 
 stateManager.states = {}
-stateManager.currentState = 1
+stateManager.currentState = 2
 
 stateManager.Init = function(self)
  table.insert(self.states, require("States/JumpOverIt"))
+ table.insert(self.states, require("States/HotPotato"))
 end
 
 stateManager.Update = function(self, dt)

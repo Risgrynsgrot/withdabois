@@ -1,11 +1,11 @@
 local state = {}
 
-state.Update = function(dt)
+state.Update = function(self, dt)
   
   return false
 end
 
-state.Draw = function()
+state.Draw = function(self)
   
 end
 
