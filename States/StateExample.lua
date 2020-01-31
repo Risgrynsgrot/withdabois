@@ -1,11 +1,20 @@
 local state = {}
 
-state.Update = function(self, dt)
+state.Update = function(dt)
   
   return false
 end
 
-state.Draw = function(self)
+state.Draw = function()
+  
+end
+
+
+state.OnEnter = function()
+  
+end
+
+state.OnLeave = function()
   
 end
 
