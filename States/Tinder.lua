@@ -58,6 +58,20 @@ end
 
 state.OnEnter = function(self)
 
+	 unpairedPlayers = { }
+	 pairedPlayers = { }
+	
+	 playerState = {
+		dirSelect = 1,
+		walking = 2,
+		matched = 3
+	}
+	
+	 winCondition = false
+	 winTimer = 20
+	
+	 timer = 2
+	
 	x = 0
 	y = 0
   	for k, p in ipairs(PlayerManager.alivePlayers) do

@@ -63,7 +63,7 @@ state.Update = function(self, dt)
 
 	if #PlayerManager.alivePlayers < 2 then
 	 	for k,p in ipairs(PlayerManager.alivePlayers) do
-			p.AddScore()
+			p:AddScore()
 		end	
 		return true
 	end

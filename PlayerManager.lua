@@ -5,7 +5,7 @@ pm.alivePlayers = {}
 pm.deadPlayers = {}
 
 pm.Init = function(self)
-  for i = 1,20 do
+  for i = 1,7 do
     pm.players[i] = CreatePlayer(i, i * 38 - 16, 400)
     pm.alivePlayers[i] = pm.players[i]
   end
