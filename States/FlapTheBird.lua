@@ -42,7 +42,7 @@ state.Update = function(self, dt)
 			p.v = -jumpForce
 		end
 		p.y = p.y + p.v * dt
-		if p.y - p.hw*2 > height then
+		if p.y - p.wh*2 > height then
 			PlayerManager:EliminatePlayer(p)
 		end
 	end	
@@ -61,6 +61,7 @@ state.Draw = function(self)
 		love.love.graphics.setColor(1, 1, 1, 1)
 		local x = wall.x - timer + width
 		love.graphics.rectangle("fill", x, wall.y, 10, 10)
+		print(x)
 	end
  	PlayerManager:Draw()
 end
