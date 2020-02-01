@@ -1,6 +1,5 @@
 local state = { }
-
-
+state.timer = 2
 local Dot = function(firstVector, secondVector)
   return  firstVector.x * secondVector.x + firstVector.y * secondVector.y
 end
@@ -40,11 +39,18 @@ state.OnEnter = function()
 end
 
 
-state.Update = function(dt)
+state.Update = function(self, dt)
 
 	if winCondition == true then
-		return false
+    self.timer = self.timer - dt
+    if self.timer > 0 then 
+      return false
+    end
 	end
+  
+  if self.timer < 0 then
+    return true
+  end
 
 	for k, p in ipairs(PlayerManager.alivePlayers) do
 		if p:GetPressed() then

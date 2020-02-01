@@ -48,7 +48,7 @@ state.Update = function(self, dt)
     
   end
 
-  return self.x < -100
+  return self.x < -width * 2
 end
 
 state.Draw = function(self)
