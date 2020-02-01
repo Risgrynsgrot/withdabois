@@ -32,7 +32,7 @@ state.Update = function(self, dt)
 		if p:GetPressed() then
 			p.v = p.v - jumpForce
 		end
-		p.y = p.y + p.v
+		p.y = p.y + p.v * dt
 	end
   return false
 end
