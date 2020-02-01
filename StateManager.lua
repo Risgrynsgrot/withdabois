@@ -12,7 +12,7 @@ stateManager.Init = function(self)
 end
 
 stateManager.Update = function(self, dt)
-  
+  PlayerManager:Update()
   if (self.states[self.currentState]:Update(dt)) then
     
     self.states[self.currentState]:OnLeave() 
