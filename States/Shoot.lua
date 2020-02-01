@@ -44,6 +44,7 @@ state.Draw = function(self)
 end
 
 state.OnEnter = function()
+    timeToReturn = 2
     gameIsFinished = false
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         targets[k] = k
