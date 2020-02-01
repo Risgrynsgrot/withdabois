@@ -15,6 +15,12 @@ pm.GetPlayers = function(self)
   return self.players
 end
 
+pm.Update = function(self)
+  for k,v in ipairs(self.players) do
+    v:UpdateInput()
+  end
+end
+
 pm.Draw = function(self)
   for k,v in ipairs(self.alivePlayers) do
     v:Draw()

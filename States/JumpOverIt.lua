@@ -12,8 +12,8 @@ end
 
 state.Update = function(self, dt)
   for i,p in ipairs(PlayerManager:GetPlayers()) do
-    if p:GetInput() and p.y >= height - 128 then
-      self.vy[i] = -10
+    if p:GetPressed() and p.y >= height - 128 then
+      self.vy[i] = -64
     end
     
     self.vy[i] = self.vy[i] + self.g
