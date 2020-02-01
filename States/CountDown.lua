@@ -7,7 +7,7 @@ local targetTime = 5
 
 
 state.OnEnter = function(self)
-    time = 0
+    time = targetTime
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         stopped[k] = false
         timers[k] = 0
@@ -21,7 +21,7 @@ state.Update = function(self, dt)
             stopped[k] = true
         end
     end
-    time = time + dt
+    time = time - dt
     return false
 end
 
@@ -30,8 +30,10 @@ state.Draw = function(self)
         p.x = width / #PlayerManager:GetPlayers() * k - 1
         p.y = height * 0.75
         p:Draw()
-    --love.graphics.print(timers[k], (width / #PlayerManager:GetPlayers()) * k, 300)
+        --love.graphics.print(timers[k], (width / #PlayerManager:GetPlayers()) * k, 300)
     end
+    alphaTime = targetTime / 2
+    love.graphics.setColor(1, 1, 1, 1 - alphaTime / alphaTime - math.max(0, time))
     love.graphics.print(time, width / 2, height / 2)
 end
 
