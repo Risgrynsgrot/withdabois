@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Shoot!"
 local targets = {}
 local isDead = {}
 

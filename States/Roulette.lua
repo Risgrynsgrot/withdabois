@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Roulette!"
 state.r = 0
 state.racc = 0.1
 state.slice = (math.pi * 2) / #PlayerManager:GetPlayers()

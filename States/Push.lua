@@ -1,5 +1,5 @@
 local state = { }
-
+state.name = "Push!"
 
 local playFieldRadius = 316
 local playerSpawnRadius = 256

@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Don't pop!"
 state.scale = {}
 state.maxScale = 0
 state.highestValue = 0

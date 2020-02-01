@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Countdown!"
 
 local timers = {}
 local stopped = {}

@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Flap the bird!"
 local walls = {}
 local timer = 0
 local wallTimer = 0

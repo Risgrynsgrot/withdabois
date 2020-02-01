@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Canoe!"
 
 state.canoes = {}
 state.strokeTime = 1

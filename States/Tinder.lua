@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Tinder!"
 local unpairedPlayers = { }
 local pairedPlayers = { }
 

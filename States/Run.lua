@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Run!"
 state.vy = {}
 state.minY = 999999
 

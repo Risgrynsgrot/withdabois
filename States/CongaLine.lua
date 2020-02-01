@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Conga line!"
 
 state.speed = 200
 state.turningSpeed = 1

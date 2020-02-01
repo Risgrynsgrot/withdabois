@@ -1,4 +1,5 @@
 local state = { }
+state.name = "Suck the ball!"
 state.timer = 2
 local Dot = function(firstVector, secondVector)
   return  firstVector.x * secondVector.x + firstVector.y * secondVector.y
