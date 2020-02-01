@@ -15,6 +15,13 @@ pm.GetPlayers = function(self)
   return self.players
 end
 
+pm.Update = function(self, dt)
+  for k,v in ipairs(self.players) do
+    v:UpdateInput()
+    v:UpdateJump(dt)
+  end
+end
+
 pm.Draw = function(self)
   for k,v in ipairs(self.players) do
     v:Draw()
@@ -22,10 +29,10 @@ pm.Draw = function(self)
 end
 
 pm.ResetRound = function(self)
-  pm.deadPlayers = {}
-  pm.alivePlayers = {}
+  self.deadPlayers = {}
+  self.alivePlayers = {}
   for k,v in ipairs(self.players) do
-    pm.alivePlayers[k] = pm.players
+    self.alivePlayers[k] = v
   end
 end
 
