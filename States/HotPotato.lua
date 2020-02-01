@@ -21,12 +21,13 @@ end
 
 local textScale = 0
 local textRot = 0
-local textTime = 0
+local textTimer = 0
+local textTime = 2
 
 state.OnEnter = function()
 	textScale = 0
 	textRot = 0
-	textTime = 0
+	textTimer = 0
 	bombTimer = bombTime
 	bombBlown = false
   	local playerRadius = 200
@@ -55,9 +56,12 @@ state.Update = function(self, dt)
    			Explode()
    		end
 	else
-		textTime = textTime + dt
-		textRot = math.sin(textTime*14) * 0.2
-		textScale = textScale + (2 + math.sin(textTime * 10) - textScale) * dt * 10
+		textTimer = textTimer + dt
+		textRot = math.sin(textTimer*14) * 0.2
+		textScale = textScale + (2 + math.sin(textTimer * 10) - textScale) * dt * 10
+		if textTimer > textTime then
+			return true
+		end
 	end
   	return false
 end
