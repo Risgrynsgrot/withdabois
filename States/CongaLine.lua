@@ -290,6 +290,7 @@ state.OnLeave = function(self)
     v.back = nil
     v.moved = nil
     v.turning = nil
+    v.r = 0
   end
 end
 

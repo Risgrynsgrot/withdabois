@@ -183,6 +183,7 @@ end
 state.OnLeave = function(self)
     	for k, p in pairs(PlayerManager:GetPlayers()) do
     		p.state = nil
+    		p.r = 0
 	end
 end
 

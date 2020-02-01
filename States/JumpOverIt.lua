@@ -64,7 +64,9 @@ end
 
 
 state.OnLeave = function()
-  
+  for i,p in ipairs(PlayerManager:GetPlayers()) do
+    p.r = 0
+  end
 end
 
 return state
