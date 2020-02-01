@@ -9,6 +9,7 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
  table.insert(self.states, require("States/SuckTheBall"))
+ table.insert(self.states, require("States/CountDown"))
  self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
 end
