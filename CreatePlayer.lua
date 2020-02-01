@@ -1,6 +1,29 @@
 function CreatePlayer(id, x, y)
   local p = {}
   
+  p.playerKeyConstants = {}
+  table.insert(p.playerKeyConstants,'q')
+  table.insert(p.playerKeyConstants,'w')
+  table.insert(p.playerKeyConstants,'e')
+  table.insert(p.playerKeyConstants,'r')
+  table.insert(p.playerKeyConstants,'t') --5
+  table.insert(p.playerKeyConstants,'y')
+  table.insert(p.playerKeyConstants,'u')
+  table.insert(p.playerKeyConstants,'i')
+  table.insert(p.playerKeyConstants,'o')
+  table.insert(p.playerKeyConstants,'p') --10
+  table.insert(p.playerKeyConstants,'a')
+  table.insert(p.playerKeyConstants,'s')
+  table.insert(p.playerKeyConstants,'d')
+  table.insert(p.playerKeyConstants,'f')
+  table.insert(p.playerKeyConstants,'g') --15
+  table.insert(p.playerKeyConstants,'c')
+  table.insert(p.playerKeyConstants,'v')
+  table.insert(p.playerKeyConstants,'b')
+  table.insert(p.playerKeyConstants,'n')
+  table.insert(p.playerKeyConstants,'m')
+  
+
   colors = {
     { r = 1, g = 0,    b = 0 },
     { r = 1, g = 1,    b = 0 },
@@ -23,7 +46,7 @@ function CreatePlayer(id, x, y)
     if  (joystick ~= nil) then
       return joystick:isDown(self.id)
     else
-      return false
+     return love.keyboard.isDown(self.playerKeyConstants[self.id])
     end
   end
   
