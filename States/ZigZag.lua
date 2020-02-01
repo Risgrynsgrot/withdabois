@@ -2,7 +2,7 @@ local state = {}
 
 local walls = {}
 local timer = 0
-local wallTimer = 0
+local wallTimer = 2
 local wallTime = 3
 
 local jumpForce = 300
