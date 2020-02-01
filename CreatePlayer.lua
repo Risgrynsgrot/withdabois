@@ -22,11 +22,7 @@ function CreatePlayer(id, x, y)
   p.color = colors[p.colorIndex]
   
   p.GetInput = function(self)
-    if  (joystick ~= nil) then
-      return joystick:isDown(self.id) or love.keyboard.isDown(string.char(string.byte("a")+self.id-1))
-    else
-      return false
-    end
+    return ((joystick ~= nil and joystick:isDown(self.id)) or love.keyboard.isDown(string.char(string.byte("a")+self.id-1)))
   end
 
   p.UpdateInput = function(self)
