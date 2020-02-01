@@ -55,6 +55,7 @@ function CreatePlayer(id, x, y)
   end
   
   p.Draw = function(self)
+    love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b)
     love.graphics.translate(self.x, self.y)
     love.graphics.rotate(self.r - 3.14/4)
@@ -64,7 +65,7 @@ function CreatePlayer(id, x, y)
     else
       love.graphics.circle("fill", self.x, self.y, self.wh, self.controllerId + 2)
     end
-    love.graphics.origin()
+    love.graphics.pop()
   end
   
   return p

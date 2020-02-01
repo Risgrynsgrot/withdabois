@@ -6,12 +6,12 @@ stateManager.currentState = 0
 stateManager.Init = function(self)
  table.insert(self.states, require("States/JumpOverIt"))
  table.insert(self.states, require("States/HotPotato"))
- self.currentState = 2--love.math.random(#self.states)
+ self.currentState = 1--love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
 end
 
 stateManager.Update = function(self, dt)
-  
+  PlayerManager:Update()
   if (self.states[self.currentState]:Update(dt)) then
     
     self.states[self.currentState]:OnLeave() 
