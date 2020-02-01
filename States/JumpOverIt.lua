@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Jump over it!"
 state.vy = {}
 state.vx = {}
 state.alive = {}

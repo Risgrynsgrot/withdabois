@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Run!"
 state.vy = {}
 
 state.OnEnter = function(self)
@@ -42,6 +43,7 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
+  love.graphics.push()
   local camY = math.min(self.minY - 64, -height * 0.9)
   love.graphics.translate(0, -camY)
   local ly = camY
@@ -50,7 +52,7 @@ state.Draw = function(self)
     love.graphics.line(0, y, width, y)    
   end
   PlayerManager:Draw()
-    
+  love.graphics.pop()
 end
 
 state.OnLeave = function(self)

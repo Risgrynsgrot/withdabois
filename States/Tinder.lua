@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Tinder!"
 local unpairedPlayers = { }
 local pairedPlayers = { }
 
@@ -31,7 +31,6 @@ local DrawPlayerWithArrow = function(self, x, y)
 		self.y = y
 
 		self:Draw()
-		love.graphics.line(self.x, self.y, self.x + math.cos(self.r) * self.wh  *2, self.y + math.sin(self.r) * self.wh * 2)
 
 		self.x = oldX
 		self.y = oldY
@@ -137,6 +136,8 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
+	love.graphics.setColor(1,1,1,1)
+  	love.graphics.print(string.sub(winTimer, 0, 2),0,0)
 
 	for i = 1, #pairedPlayers, 2 do
 
@@ -171,9 +172,6 @@ state.Draw = function(self)
 
 		DrawPlayerWithArrow(p, p.x, p.y)
 	end
-
-	love.graphics.setColor(1, 1, 1, 1)
-  	love.graphics.print("Time: " .. winTimer,8, 8, 0, 0.5, 0.5, 0, 0, 0, 0)
 
 	if winCondition == true then
 		love.graphics.setColor(1, 1, 1, 1)

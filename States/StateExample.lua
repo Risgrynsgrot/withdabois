@@ -1,4 +1,5 @@
 local state = {}
+state.name = "title name!"
 
 state.OnEnter = function(self)
   
