@@ -136,6 +136,8 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
+	love.graphics.setColor(1,1,1,1)
+  	love.graphics.print(string.sub(winTimer, 0, 2),0,0)
 
 	for i = 1, #pairedPlayers, 2 do
 
@@ -170,9 +172,6 @@ state.Draw = function(self)
 
 		DrawPlayerWithArrow(p, p.x, p.y)
 	end
-
-	love.graphics.setColor(1, 1, 1, 1)
-  	love.graphics.print("Time: " .. winTimer,8, 8, 0, 0.5, 0.5, 0, 0, 0, 0)
 
 	if winCondition == true then
 		love.graphics.setColor(1, 1, 1, 1)
