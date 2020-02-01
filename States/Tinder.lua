@@ -189,7 +189,10 @@ state.Draw = function(self)
 
 	if winCondition == true then
 		love.graphics.setColor(1, 1, 1, 1)
-  		love.graphics.print("Time's up!",width/2 - 128, height/2, 0, 0.5, 0.5, 0, 0, 0, 0)
+  		local text = "Time's up!"
+  		local w = font:getWidth(text)
+  		local h = font:getHeight(text)
+  		love.graphics.print(text, width/2, height/2, 0, 1, 1, w/2, h/2, 0, 0)
   	end
 
 end
