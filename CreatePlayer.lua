@@ -16,7 +16,7 @@ function CreatePlayer(id, x, y)
   p.id = id
   p.colorIndex = ((id - 1) % 5) + 1
   p.controllerId = math.ceil(id / 5)
-  
+  p.score = 0
   p.color = colors[p.colorIndex]
   
   p.GetInput = function(self)
@@ -29,11 +29,16 @@ function CreatePlayer(id, x, y)
   
   p.Draw = function(self)
     love.graphics.setColor(self.color.r, self.color.g, self.color.b)
-    love.graphics.rectangle("fill", self.x, self.y, self.wh, self.wh)
+    love.graphics.translate(self.x, self.y)
+    love.graphics.rotate(self.r - 3.14/4)
+    love.graphics.translate(-self.x, -self.y)
+    if self.controllerId == 4 then
+      love.graphics.circle("fill", self.x, self.y, self.wh, 20)
+    else
+      love.graphics.circle("fill", self.x, self.y, self.wh, self.controllerId + 2)
+    end
+    love.graphics.origin()
   end
   
   return p
-  
-  
-  
 end
