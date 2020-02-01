@@ -1,6 +1,6 @@
 local state = {}
 
-state.OnEnter = function()
+state.OnEnter = function(self)
   
 end
 
@@ -13,7 +13,7 @@ state.Draw = function(self)
   
 end
 
-state.OnLeave = function()
+state.OnLeave = function(self)
   
 end
 

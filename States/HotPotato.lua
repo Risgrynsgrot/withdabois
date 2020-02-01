@@ -43,7 +43,7 @@ state.Update = function(self, dt)
   	if not bombBlown then
   		for k,p in ipairs(PlayerManager.alivePlayers) do
   			if bombIndex == k then
-  				if p:GetInput() or love.keyboard.isDown('d') then
+  				if p:GetPressed() or love.keyboard.isDown('d') then
       				bombIndex = love.math.random(#PlayerManager.alivePlayers)
     			end
   			end
