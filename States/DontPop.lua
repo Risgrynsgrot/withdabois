@@ -45,7 +45,7 @@ state.Update = function(self, dt)
 	  				print("set")
 				end  				
 	  		end
-	  		self.highestPlayer.score = self.highestPlayer.score + 1
+	  		self.highestPlayer:AddScore()
 	  	end
 	end
   else

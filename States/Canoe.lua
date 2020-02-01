@@ -71,7 +71,7 @@ state.Update = function(self, dt)
 				self.over = true;
 				self.winnerIndex = k
 				for i, p in ipairs(canoe.players) do
-					p.score = p.score + 1
+					p:AddScore()
 				end
 			end
 	  	end

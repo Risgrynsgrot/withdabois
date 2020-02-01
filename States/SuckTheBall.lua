@@ -123,7 +123,11 @@ state.Draw = function(self)
 
 	if winCondition == true then
 		love.graphics.setColor(winColor.r, winColor.g, winColor.b, 1)
-  		love.graphics.print("Winner winner chicken the dinner!",width/2 - 196, height/2, 0, 2, 2, 0, 0, 0, 0)
+  		local text = "Winner winner chicken the dinner!"
+  		local w = font:getWidth(text)
+  		local h = font:getHeight(text)
+  		love.graphics.print(text, width/2, height/2, 0, 0.5, 0.5, w/2, h/2, 0, 0)
+  		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 end

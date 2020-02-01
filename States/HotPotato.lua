@@ -15,7 +15,7 @@ local bombTick = 0
 local Explode = function()
 	for k,p in ipairs(PlayerManager:GetPlayers()) do
 		if bombIndex ~= k then
-			p.score = p.score + 1
+			p:AddScore()
 		else
 			PlayerManager:EliminatePlayer(p)
 		end

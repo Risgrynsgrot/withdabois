@@ -137,7 +137,7 @@ end
 
 state.Draw = function(self)
 	love.graphics.setColor(1,1,1,1)
-  	love.graphics.print(string.sub(winTimer, 0, 2),0,0)
+  	love.graphics.print(string.sub(winTimer, 0, 3),10,10)
 
 	for i = 1, #pairedPlayers, 2 do
 

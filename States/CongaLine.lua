@@ -208,7 +208,7 @@ end
 
 state.Draw = function(self)
   love.graphics.setColor(1,1,1,1)
-  love.graphics.print(string.sub(self.timer, 0, 2),0,0)
+  love.graphics.print(string.sub(self.timer, 0, 3),10,10)
   
   for k,v in ipairs(PlayerManager.alivePlayers) do
     v:Draw()
