@@ -9,12 +9,12 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
  table.insert(self.states, require("States/SuckTheBall"))
- self.currentState = love.math.random(#self.states)
+ self.currentState = 2--love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
 end
 
 stateManager.Update = function(self, dt)
-  PlayerManager:Update()
+  PlayerManager:Update(dt)
   if (self.states[self.currentState]:Update(dt)) then
     
     self.states[self.currentState]:OnLeave() 

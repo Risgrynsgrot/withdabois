@@ -15,9 +15,10 @@ pm.GetPlayers = function(self)
   return self.players
 end
 
-pm.Update = function(self)
+pm.Update = function(self, dt)
   for k,v in ipairs(self.players) do
     v:UpdateInput()
+    v:UpdateJump(dt)
   end
 end
 
