@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Jump over it!"
 state.vy = {}
 state.vx = {}
 state.alive = {}
@@ -52,17 +53,20 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
+  love.graphics.push()
   love.graphics.scale(0.75, 0.75)
   love.graphics.rectangle("fill", 0, height + 32, width*2, 500)
   love.graphics.rectangle("fill", self.x, height -32, 64, 64)
   PlayerManager:Draw()
-  love.graphics.scale(1, 1)
+  love.graphics.pop()
 
 end
 
 
 state.OnLeave = function()
-  
+  for i,p in ipairs(PlayerManager:GetPlayers()) do
+    p.r = 0
+  end
 end
 
 return state

@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "ZigZag!"
 local walls = {}
 local timer = 0
 local wallTimer = 2
@@ -99,7 +99,7 @@ state.Update = function(self, dt)
 
 	if #PlayerManager.alivePlayers < 2 then
 	 	for k,p in ipairs(PlayerManager.alivePlayers) do
-			p.score = p.score + 1
+			p:AddScore()
 		end	
 		return true
 	end

@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Conga line!"
 
 state.speed = 200
 state.turningSpeed = 1
@@ -207,7 +208,7 @@ end
 
 state.Draw = function(self)
   love.graphics.setColor(1,1,1,1)
-  love.graphics.print(self.timer,0,0)
+  love.graphics.print(string.sub(self.timer, 0, 3),10,10)
   
   for k,v in ipairs(PlayerManager.alivePlayers) do
     v:Draw()
@@ -289,6 +290,7 @@ state.OnLeave = function(self)
     v.back = nil
     v.moved = nil
     v.turning = nil
+    v.r = 0
   end
 end
 

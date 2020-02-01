@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Canoe!"
 
 state.canoes = {}
 state.strokeTime = 1
@@ -27,6 +28,12 @@ state.OnEnter = function(self)
   		table.insert(self.canoes[p.controllerId].players, p)
   		p.hasClicked = false
   	end
+  	for k, canoe in ipairs(self.canoes) do
+  		for i, p in ipairs(canoe.players) do
+  			p.x = canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players
+			p.y = (k-0.5) * height/#self.canoes
+		end
+	end
 end
 
 state.Update = function(self, dt)
@@ -70,7 +77,7 @@ state.Update = function(self, dt)
 				self.over = true;
 				self.winnerIndex = k
 				for i, p in ipairs(canoe.players) do
-					p.score = p.score + 1
+					p:AddScore()
 				end
 			end
 	  	end

@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Don't pop!"
 state.scale = {}
 state.maxScale = 0
 state.highestValue = 0
@@ -45,7 +45,7 @@ state.Update = function(self, dt)
 	  				print("set")
 				end  				
 	  		end
-	  		self.highestPlayer.score = self.highestPlayer.score + 1
+	  		self.highestPlayer:AddScore()
 	  	end
 	end
   else

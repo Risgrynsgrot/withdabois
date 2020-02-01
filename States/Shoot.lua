@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Shoot!"
 local targets = {}
 local isDead = {}
 
@@ -33,6 +33,7 @@ end
 state.Draw = function(self)
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         if isDead[k] == false then
+            p:Draw()
             local playerTargetIndex = targets[k]
             if(isDead[playerTargetIndex] == false) then
                 local playerTarget = PlayerManager:GetPlayers()[playerTargetIndex]
@@ -40,7 +41,6 @@ state.Draw = function(self)
             end
         end
     end
-    PlayerManager:Draw()
 end
 
 state.OnEnter = function()

@@ -1,4 +1,5 @@
 local state = {}
+state.name = "Countdown!"
 
 local timers = {}
 local stopped = {}
@@ -12,6 +13,18 @@ local endTimer = 5
 
 
 state.OnEnter = function(self)
+
+     timers = {}
+     stopped = {}
+     score = {}
+     time = 0
+     targetTime = 10
+     alpha = 0
+     alphaTime = targetTime / 2
+     ended = false
+     endTimer = 5
+
+
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         p.x = width / #PlayerManager:GetPlayers() * k - (p.wh)
         p.y = height * 0.75
@@ -53,6 +66,7 @@ state.Update = function(self, dt)
 
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         if p:GetPressed() and stopped[k] == false then
+            p:Jump()
             timers[k] = time
             stopped[k] = true
         end
@@ -72,7 +86,11 @@ state.Draw = function(self)
         p:Draw()
     end
     love.graphics.setColor(1, 1, 1, alpha)
-    love.graphics.print(time, width / 2, height / 2)
+    local text = string.sub(time, 0, 3)
+    local w = font:getWidth(text)
+    local h = font:getHeight(text)
+    love.graphics.print(text, width/2, height/2, math.sin(time)*0.1, 1.25, 1.25, w/2, h/2, 0, 0)
+    love.graphics.setColor(1, 1, 1, 1)
 end
 
 state.OnLeave = function(self)

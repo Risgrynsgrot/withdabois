@@ -20,6 +20,7 @@ function CreatePlayer(id, x, y)
   p.oldState = false
   p.newState = false
   p.score = 0
+  p.scoreTimer = 0
   p.color = colors[p.colorIndex]
   p.color.a = 1
 
@@ -47,6 +48,7 @@ function CreatePlayer(id, x, y)
   end
 
   p.UpdateEyes = function(self, dt)
+    self.scoreTimer = self.scoreTimer + dt
     for k,eye in ipairs(self.eyes) do
       eye.vx = eye.vx * 0.9
       eye.vy = eye.vy * 0.9
@@ -95,10 +97,6 @@ function CreatePlayer(id, x, y)
     end
   end
 
-  p.GetInput = function(self)
-    return ((joystick ~= nil and joystick:isDown(self.id)) or love.keyboard.isDown(string.char(string.byte("a")+self.id-1)))
-  end
-
   p.UpdateJump = function(self, dt)
     self.jumpVel = self.jumpVel + dt * 1000
     self.jumpHeight = self.jumpHeight + dt * self.jumpVel
@@ -106,6 +104,16 @@ function CreatePlayer(id, x, y)
       self.jumpVel = 0
       self.jumpHeight = 0
     end 
+  end
+
+  p.AddScore = function(self)
+    self.score = self.score + 1
+    self.scoreTimer = 0
+  end
+
+
+  p.GetInput = function(self)
+    return ((joystick ~= nil and joystick:isDown(self.id)) or love.keyboard.isDown(string.char(string.byte("a")+self.id-1)))
   end
 
   p.UpdateInput = function(self)
@@ -129,11 +137,17 @@ function CreatePlayer(id, x, y)
     return self.newState == false
   end
 
+  p.ResetVisuals = function(self)
+    self.scale = 1
+    self.wh = 32
+    self.r = 0
+  end
+
   p.Draw = function(self)
     love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)
     love.graphics.translate(self.x, self.y)
-    love.graphics.rotate(self.r - 3.14/4)
+    love.graphics.rotate(self.r)
     love.graphics.translate(-self.x, -self.y)
     if self.controllerId == 4 then
       love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh * self.scale, 20)
@@ -146,7 +160,13 @@ function CreatePlayer(id, x, y)
       love.graphics.setColor(0, 0, 0, 1)
       love.graphics.circle("fill", self.x + eye.offx + eye.x, self.y + self.jumpHeight + eye.offy + eye.y, eye.innerRad, 16)
     end
+
+    love.graphics.setColor(1, 1, 1, (1-self.scoreTimer)*2)
+    local w = font:getWidth("+1")
+    local h = font:getHeight("+1")
+    love.graphics.print( "+1", self.x, self.y - (self.scoreTimer*self.scoreTimer)*50, math.sin(self.scoreTimer)*0.1, math.max(self.scoreTimer/10, 1), math.max(self.scoreTimer/10, 1), w/2, h/2)
     love.graphics.setColor(1, 1, 1, 1)
+
     love.graphics.pop()
   end
   
