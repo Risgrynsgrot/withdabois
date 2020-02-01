@@ -5,7 +5,7 @@ pm.alivePlayers = {}
 pm.deadPlayers = {}
 
 pm.Init = function(self)
-  for i = 1,20 do
+  for i = 1,5 do
     pm.players[i] = CreatePlayer(i, i * 38 - 16, 400)
     pm.alivePlayers[i] = pm.players[i]
   end
@@ -24,7 +24,7 @@ pm.Update = function(self, dt)
 end
 
 pm.Draw = function(self)
-  for k,v in ipairs(self.alivePlayers) do
+  for k,v in ipairs(self.players) do
     v:Draw()
   end
 end
