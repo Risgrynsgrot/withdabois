@@ -1,15 +1,15 @@
 local state = {}
 state.vy = {}
-state.minY = 999999
 
 state.OnEnter = function(self)
   local slice = width / #PlayerManager:GetPlayers()
   for i,p in ipairs(PlayerManager:GetPlayers()) do
     p.x = slice * i - slice / 2
     p.y = 0
-    self.vy[i] = 0
+    p.vy = 0
     p.r = 0
   end
+  self.t = 2
   
   self.minY = 999999
 end
@@ -19,13 +19,13 @@ state.Update = function(self, dt)
   
   for i,p in ipairs(PlayerManager.alivePlayers) do
     if p:GetPressed() then
-      self.vy[i] = self.vy[i] - 0.1
+      p.vy = p.vy- 0.1
+      p:Jump()
     end
     
-    p.y = p.y + self.vy[i]
+    p.y = p.y + p.vy
     
     self.minY = math.min(self.minY, p.y)
-      
   end
   
   for i,p in ipairs(PlayerManager.alivePlayers) do
@@ -34,8 +34,11 @@ state.Update = function(self, dt)
     end
   end
   
-  print(#PlayerManager.alivePlayers)
-  return #PlayerManager.alivePlayers == 1
+  if #PlayerManager.alivePlayers == 1 then
+    self.t = self.t - dt
+  end
+  
+  return self.t < 0
 end
 
 state.Draw = function(self)
@@ -51,6 +54,9 @@ state.Draw = function(self)
 end
 
 state.OnLeave = function(self)
+  for i,p in ipairs(PlayerManager.alivePlayers) do
+   p.vy = nil
+  end
 end
 
 return state

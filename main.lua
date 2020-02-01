@@ -7,6 +7,7 @@ width = 1280
 
 
 function love.load()
+  love.math.setRandomSeed(love.timer.getTime())
   love.graphics.setFont(font)
   joystick = love.joystick.getJoysticks()[1]
   PlayerManager:Init()
