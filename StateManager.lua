@@ -9,7 +9,7 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
  table.insert(self.states, require("States/SuckTheBall"))
- self.currentState = 4--love.math.random(#self.states)
+ self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
 end
 
@@ -20,9 +20,10 @@ stateManager.Update = function(self, dt)
     self.states[self.currentState]:OnLeave() 
     
     PlayerManager:ResetRound()
-    
-    self.currentState = love.math.random(#self.states)
-    
+    local old = self.currentState
+    repeat
+      self.currentState = love.math.random(#self.states)
+    until self.currentState ~= old
     self.states[self.currentState]:OnEnter() 
     
   end

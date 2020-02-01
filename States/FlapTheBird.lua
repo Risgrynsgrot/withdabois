@@ -11,7 +11,7 @@ local gravity = 500
 
 local createWall = function(diff)
 	wall = {}
-	wall.x = 0
+	wall.x = width
 	wall.space = love.math.random(diff)
 	wall.y = love.math.random(diff)
 	return wall
@@ -29,9 +29,10 @@ end
 
 state.Update = function(self, dt)
 	timer = timer + dt
-	wallTimer = wallTimer + dt * timer/100
+	wallTimer = wallTimer + dt * (timer/100+1)
 	if wallTimer > wallTime then
 		wallTimer = 0
+		print("wall added")
 		table.insert(walls, createWall(timer/100))
 	end
 
@@ -57,11 +58,10 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
-	for k,p in ipairs(walls) do
-		love.love.graphics.setColor(1, 1, 1, 1)
+	for k,wall in ipairs(walls) do
+		love.graphics.setColor(1, 1, 1, 1)
 		local x = wall.x - timer + width
 		love.graphics.rectangle("fill", x, wall.y, 10, 10)
-		print(x)
 	end
  	PlayerManager:Draw()
 end
