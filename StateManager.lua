@@ -11,7 +11,7 @@ stateManager.Init = function(self)
  self.currentState = love.math.random(#self.states)
  self.currentState = 3
  
-self.states[self.currentState]:OnEnter()
+ self.states[self.currentState]:OnEnter()
 end
 
 stateManager.Update = function(self, dt)
