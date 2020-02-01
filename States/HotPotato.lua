@@ -67,9 +67,7 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
-  	for k,p in ipairs(PlayerManager.alivePlayers) do
-    	p:Draw()
-  	end
+	PlayerManager:Draw()
 
   	if not bombBlown then
   		love.graphics.setColor(1, 1, 1, 1)
