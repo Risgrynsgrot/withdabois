@@ -21,6 +21,7 @@ end
 state.OnEnter = function(self)
   	diff = 0
   	timer = 0
+  	walls = {}
   	for k,p in ipairs(PlayerManager.alivePlayers) do
   		p.x = width/3 - p.id * 20
   		p.y = height/2
@@ -34,7 +35,6 @@ state.Update = function(self, dt)
 	wallTimer = wallTimer + dt * diff
 	if wallTimer > wallTime then
 		wallTimer = 0
-		print("wall added")
 		table.insert(walls, createWall(diff))
 	end
 
