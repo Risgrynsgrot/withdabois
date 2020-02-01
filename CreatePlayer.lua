@@ -21,6 +21,15 @@ function CreatePlayer(id, x, y)
   p.score = 0
   p.color = colors[p.colorIndex]
   
+  p.UpdateInput = function(self)
+    self.oldState = self.newState
+    if (joystick ~= nil) then
+      self.newState = joystick:isDown(self.id)
+    else
+      self.newState = false
+    end
+  end
+  
   p.GetInput = function(self)
     if  (joystick ~= nil) then
       return joystick:isDown(self.id)
@@ -29,8 +38,20 @@ function CreatePlayer(id, x, y)
     end
   end
   
-   p.GetPressed = function(self)
+  p.GetPressed = function(self)
     return self.newState == true and p.oldState == false
+  end
+  
+  p.GetReleased = function(self)
+    return self.newState == false and p.oldState == true
+  end
+  
+  p.GetDown = function(self)
+    return self.newState == true
+  end
+  
+   p.GetUp = function(self)
+    return self.newState == false
   end
   
   p.Draw = function(self)
