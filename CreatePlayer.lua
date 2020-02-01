@@ -11,6 +11,7 @@ function CreatePlayer(id, x, y)
   
   p.x = x
   p.y = y
+  p.scale = 1
   p.wh = 32
   p.r = 0
   p.id = id
@@ -130,12 +131,12 @@ function CreatePlayer(id, x, y)
     love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)
     love.graphics.translate(self.x, self.y)
-    --love.graphics.rotate(self.r - 3.14/4)
+    love.graphics.rotate(self.r - 3.14/4)
     love.graphics.translate(-self.x, -self.y)
     if self.controllerId == 4 then
-      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, 20)
+      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh * self.scale, 20)
     else
-      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, self.controllerId + 2)
+      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh * self.scale, self.controllerId + 2)
     end
     for k,eye in ipairs(self.eyes) do
       love.graphics.setColor(1, 1, 1, 1)
