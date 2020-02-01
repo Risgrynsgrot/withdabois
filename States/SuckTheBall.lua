@@ -28,7 +28,7 @@ local winColor = {
 local playFieldRadius = 300
 
 
-state.OnEnter = function()
+state.OnEnter = function(self)
 
 	for k, p in ipairs(PlayerManager.alivePlayers) do
 		local val = (k/#PlayerManager:GetPlayers())*2*3.14 
@@ -37,10 +37,16 @@ state.OnEnter = function()
 	  	p.y = height / 2 + math.sin(val) * playFieldRadius
 	  	p.r = 0
 	end
+  
+  self.winner = nil
 end
 
 
 state.Update = function(self, dt)
+
+  if self.winner ~= nil then
+    self.winner:Jump()
+  end
 
 	if winCondition == true then
     self.timer = self.timer - dt
@@ -91,7 +97,7 @@ state.Update = function(self, dt)
 
 		if distance <= p.wh + ball.radius then
 		    winCondition = true
-
+        self.winner = p
 		    winColor.r = p.color.r
 		    winColor.g = p.color.g
 		    winColor.b = p.color.b
@@ -105,7 +111,7 @@ state.Update = function(self, dt)
   return false
 end
 
-state.Draw = function()
+state.Draw = function(self)
 	love.graphics.setColor(1, 1, 1, 1)
  	love.graphics.circle("line", width / 2, height / 2, playFieldRadius, 64)
 	for k, v in pairs(PlayerManager:GetPlayers()) do
@@ -122,7 +128,7 @@ state.Draw = function()
 
 end
 
-state.OnLeave = function()
+state.OnLeave = function(self)
   
 end
 
