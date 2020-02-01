@@ -68,7 +68,7 @@ function CreatePlayer(id, x, y)
     love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b)
     love.graphics.translate(self.x, self.y)
-    --love.graphics.rotate(self.r - 3.14/4)
+    love.graphics.rotate(self.r - 3.14/4)
     love.graphics.translate(-self.x, -self.y)
     if self.controllerId == 4 then
       love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, 20)

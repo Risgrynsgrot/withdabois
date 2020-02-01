@@ -1,6 +1,6 @@
 local state = {}
 
-state.speed = 100
+state.speed = 200
 state.turningSpeed = 1
 state.alignmentToConga = 0.5
 
@@ -37,7 +37,7 @@ end
 
 state.Update = function(self, dt)
   self.timer = self.timer + dt
-  if  self.timer > 20 then
+  if  self.timer < 20 then
     
     for k,v in ipairs(PlayerManager.alivePlayers) do
       v.moved = false
@@ -74,12 +74,7 @@ state.Update = function(self, dt)
                 
                 collisionDot = Dot(cforward,cdiff)
                 
-                --if collisionDot <= self.alignmentToConga and
-                --cv.front == 0 and
-                --v.back == 0 then
-                --  v.front = ck
-                --  cv.back = k
-                --end
+               
               end
               
             end
@@ -98,18 +93,30 @@ state.Update = function(self, dt)
         
         local currentPlayer = k
   
+        v.turning = 0
+  
         if v:GetInput() then
           dir = dir + 1
+          v.turning = 1
         else
           dir = dir - 1
+          v.turning = -1
         end
-  
+        
+        local backVector = {
+          x = 0,
+          y = 0
+        }
+        
         while PlayerManager.alivePlayers[currentPlayer].back ~= 0 and PlayerManager.alivePlayers[currentPlayer].back ~= k do
           currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
+          PlayerManager.alivePlayers[currentPlayer].turning = 0
           if PlayerManager.alivePlayers[currentPlayer]:GetInput() then
             dir = dir + 1
+            PlayerManager.alivePlayers[currentPlayer].turning = 1
           else
             dir = dir - 1
+            PlayerManager.alivePlayers[currentPlayer].turning = -1
           end
         end
         
@@ -152,7 +159,6 @@ state.Update = function(self, dt)
     end
   
 else
-  self.endTimer = self.endTimer + dt
   
     if self.longestHead.id == 0 then
       for k,v in ipairs(PlayerManager.alivePlayers) do
@@ -168,20 +174,28 @@ else
           
           if self.longestHead.length < congaLength then
             self.longestHead.id = k
+            self.longestHead.length = congaLength
           end         
         end
       end
       
       local currentPlayer = self.longestHead.id
+      PlayerManager.alivePlayers[currentPlayer]:Jump()
       while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
         currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
+        PlayerManager.alivePlayers[currentPlayer]:Jump()
       end
       
     end
   
+  
   if  self.endTimer > 1 then
     return true
   end
+
+  
+  self.endTimer = self.endTimer + dt
+
   
   end
   
@@ -193,9 +207,35 @@ end
 
 state.Draw = function(self)
   love.graphics.setColor(1,1,1,1)
-  PlayerManager:Draw()
+  love.graphics.print(self.timer,0,0)
+  
   for k,v in ipairs(PlayerManager.alivePlayers) do
-    love.graphics.print(k ..  " f: " .. v.front .. "  b: " .. v.back,v.x + 50,v.y + 50)
+    v:Draw()
+    
+    local forward = {
+      x = math.cos(v.r),
+      y = math.sin(v.r)
+    }
+    
+    
+    local forwardNormal = {
+      x = -forward.y,
+      y = forward.x
+    }
+    
+    if v.turning == 1 then
+      forwardNormal.x = forwardNormal.x + forward.x * math.sin(self.timer) * 0.5
+      forwardNormal.y = forwardNormal.y + forward.y * math.sin(self.timer) * 0.5
+    elseif v.turning == -1 then
+      forwardNormal.x = -forwardNormal.x + forward.x * math.sin(self.timer) * 0.5
+      forwardNormal.y = -forwardNormal.y + forward.y * math.sin(self.timer) * 0.5
+    else
+      forwardNormal.x = 0
+      forwardNormal.y = 0
+    end
+    
+    love.graphics.circle("fill", v.x + forwardNormal.x * v.wh , v.y + forwardNormal.y * v.wh,v.wh/4)
+  
   end
 end
 
@@ -215,18 +255,22 @@ end
 state.OnEnter = function(self)
   	local playerRadius = 200
 
+  local x = 0
+	local y = 0
+
   for k,v in ipairs(PlayerManager.players) do
     v.wh = 24
     v.front = 0
     v.back = 0
     v.moved = false
+    v.turning = 0
     
-    local radiusOffset = RandomFloat(0.5,1.5)
-    
-    local val = (k/20)*2*3.14 
-    v.x = RandomFloat(0,width)
-    v.y = RandomFloat(0,height)
-    v.r = val *RandomFloat(0.5,1.5)
+    x = x + (width  - v.wh * 2) / #PlayerManager.alivePlayers
+  	y = (y + height / 3) % height
+	  v.x = x
+	  v.y = y + v.wh * 4
+	  v.r = love.math.random(0, 3.141592653589793238462643383279 * 2)
+
     
   end
   
@@ -244,6 +288,7 @@ state.OnLeave = function(self)
     v.front = nil
     v.back = nil
     v.moved = nil
+    v.turning = nil
   end
 end
 
