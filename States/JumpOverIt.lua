@@ -1,6 +1,5 @@
 local state = {}
 
-
 state.Update = function(self, dt)
   for k,p in ipairs(PlayerManager:GetPlayers()) do
     if p:GetInput() then
@@ -21,7 +20,10 @@ state.Draw = function(self)
 end
 
 state.OnEnter = function()
-  
+  for k,v in ipairs(PlayerManager:GetPlayers()) do
+    v.x = k * 38 - 16
+    v.y = 400
+  end
 end
 
 state.OnLeave = function()
