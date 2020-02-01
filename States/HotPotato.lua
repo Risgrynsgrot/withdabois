@@ -2,14 +2,6 @@ local state = {}
 
 local players = {}
 
- -- Place players in circle
- -- Create bomb
- -- Bomb ticking
- -- If bomb time over, explode
- -- Kill current player, aka give all other players score
- -- Create smoke particles!
- -- Wait a moment before returning
-
 local bombTime = 5
 local bombTimer = 0
 local bombBlown = false
@@ -20,18 +12,26 @@ local bombSpeed = 10
 local Explode = function()
 	for k,p in ipairs(PlayerManager:GetPlayers()) do
 		if bombIndex ~= k then
-			-- Increase score
-			
+			p.score = p.score + 1
+		else
+			PlayerManager:EliminatePlayer(p)
 		end
 	end
 end
 
+local textScale = 0
+local textRot = 0
+local textTime = 0
+
 state.OnEnter = function()
+	textScale = 0
+	textRot = 0
+	textTime = 0
 	bombTimer = bombTime
 	bombBlown = false
   	local playerRadius = 200
 	for k,p in ipairs(PlayerManager.alivePlayers) do
-		local val = (k/20)*2*3.14 
+		local val = (k/#PlayerManager.alivePlayers)*2*3.14 
 	  	p.x = width / 2 + math.cos(val) * playerRadius
 	  	p.y = height / 2 + math.sin(val) * playerRadius
 	  	p.r = 0
@@ -54,6 +54,10 @@ state.Update = function(self, dt)
    			bombBlown = true
    			Explode()
    		end
+	else
+		textTime = textTime + dt
+		textRot = math.sin(textTime*14) * 0.2
+		textScale = textScale + (2 + math.sin(textTime * 10) - textScale) * dt * 10
 	end
   	return false
 end
@@ -67,7 +71,7 @@ state.Draw = function(self)
   		love.graphics.setColor(1, 1, 1, 1)
   		love.graphics.circle("fill", bombPosition.x, bombPosition.y, bombRadius, 16)
   	else
-  		love.graphics.print("BOOM", 1280/2, 720/2, 0, 1, 1, 0, 0, 0, 0)
+  		love.graphics.print("BOOM", 1280/2, 720/2, textRot, textScale, textScale, 0, 0, 0, 0)
   	end
 
 end

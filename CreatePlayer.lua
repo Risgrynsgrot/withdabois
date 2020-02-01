@@ -16,7 +16,7 @@ function CreatePlayer(id, x, y)
   p.id = id
   p.colorIndex = ((id - 1) % 5) + 1
   p.controllerId = math.ceil(id / 5)
-  
+  p.score = 0
   p.color = colors[p.colorIndex]
   
   p.GetInput = function(self)
@@ -37,7 +37,4 @@ function CreatePlayer(id, x, y)
   end
   
   return p
-  
-  
-  
 end
