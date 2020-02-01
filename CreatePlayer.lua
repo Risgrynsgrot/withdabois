@@ -20,9 +20,72 @@ function CreatePlayer(id, x, y)
   p.newState = false
   p.score = 0
   p.color = colors[p.colorIndex]
+  p.color.a = 1
+
+  p.eyes = {}
+  p.CreateEye = function(x, y, rad)
+    local eye = {}
+    eye.x = 0
+    eye.y = 0
+    eye.offx = x
+    eye.offy = y
+    eye.vx = 0
+    eye.vy = 0
+    eye.prevx = 0
+    eye.prevy = 0
+    eye.rad = rad
+    eye.innerRad = rad/2
+    return eye
+  end
+  
+  table.insert(p.eyes, p.CreateEye(-p.wh/2, 0, 5 + love.math.random(10)))
+  table.insert(p.eyes, p.CreateEye(p.wh/2, 0, 5 + love.math.random(10)))
+
+  local Dot = function(firstVector, secondVector)
+    return  firstVector.x * secondVector.x + firstVector.y * secondVector.y
+  end
+
+  p.UpdateEyes = function(self, dt)
+    for k,eye in ipairs(self.eyes) do
+      eye.vx = eye.vx * 0.9
+      eye.vy = eye.vy * 0.9
+      eye.vx = eye.vx + (self.x - eye.prevx) * 0.03
+      eye.vy = eye.vy + (self.y - eye.prevy) * 0.03
+      eye.vy = eye.vy + 0.1
+      eye.prevx = self.x
+      eye.prevy = self.y
+      local distance = math.sqrt(eye.x*eye.x + eye.y*eye.y)
+      --if the ball hits the arena limit
+      if distance >= eye.rad - eye.innerRad then
+        if distance >= eye.rad + eye.innerRad then
+          eye.x = 0
+          eye.y = 0
+          eye.vx = 0
+          eye.vy = 0
+        else 
+          --I - 2.0 * dot(N, I) * N.
+          local diff = {
+            x = - eye.x,
+            y = - eye.y
+          }
+          length = math.sqrt(diff.x * diff.x + diff.y * diff.y)
+          diff.x = diff.x / length
+          diff.y = diff.y / length
+          local eyeVel = {
+            x = eye.vx, 
+            y = eye.vy
+          }
+          eye.vx = eye.vx - 2.0 * Dot(diff, eyeVel) * diff.x
+          eye.vy = eye.vy - 2.0 * Dot(diff, eyeVel) * diff.y
+        end
+      end
+      eye.x = eye.x + eye.vx
+      eye.y = eye.y + eye.vy
+    end
+  end
+
   p.jumpHeight = 0
   p.jumpVel = 0
-
   p.Jump = function(self)
     if self.jumpHeight == 0 then
       self.jumpVel = -200
@@ -34,7 +97,6 @@ function CreatePlayer(id, x, y)
   end
 
   p.UpdateJump = function(self, dt)
-    print("jump")
     self.jumpVel = self.jumpVel + dt * 1000
     self.jumpHeight = self.jumpHeight + dt * self.jumpVel
     if self.jumpHeight > 0 then
@@ -63,10 +125,10 @@ function CreatePlayer(id, x, y)
    p.GetUp = function(self)
     return self.newState == false
   end
-  
+
   p.Draw = function(self)
     love.graphics.push()
-    love.graphics.setColor(self.color.r, self.color.g, self.color.b)
+    love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)
     love.graphics.translate(self.x, self.y)
     --love.graphics.rotate(self.r - 3.14/4)
     love.graphics.translate(-self.x, -self.y)
@@ -75,6 +137,13 @@ function CreatePlayer(id, x, y)
     else
       love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, self.controllerId + 2)
     end
+    for k,eye in ipairs(self.eyes) do
+      love.graphics.setColor(1, 1, 1, 1)
+      love.graphics.circle("fill", self.x + eye.offx, self.y + self.jumpHeight + eye.offy, eye.rad, 16)
+      love.graphics.setColor(0, 0, 0, 1)
+      love.graphics.circle("fill", self.x + eye.offx + eye.x, self.y + self.jumpHeight + eye.offy + eye.y, eye.innerRad, 16)
+    end
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.pop()
   end
   
