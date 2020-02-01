@@ -56,6 +56,7 @@ state.Draw = function(self)
   love.graphics.rectangle("fill", 0, height + 32, width*2, 500)
   love.graphics.rectangle("fill", self.x, height -32, 64, 64)
   PlayerManager:Draw()
+  love.graphics.scale(1, 1)
 
 end
 
