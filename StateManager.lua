@@ -9,7 +9,7 @@ stateManager.titleText = ""
 stateManager.ShowTitle = function(self, text)
   self.titleTimer = 0
   self.titleText = text
-  print("Show")
+  print(text)
 end
 
 stateManager.Init = function(self)
@@ -56,7 +56,6 @@ stateManager.Draw = function(self)
   self.states[self.currentState]:Draw()
   local alpha = (self.titleTime - self.titleTimer) * 10
   if alpha > 0 then
-    print(alpha)
     love.graphics.setColor(1, 1, 1, alpha)
     love.graphics.rectangle("fill", 0, 0, width, height)
     love.graphics.setColor(0, 0, 0, alpha)
