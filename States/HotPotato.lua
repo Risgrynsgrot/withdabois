@@ -48,8 +48,9 @@ end
 state.Update = function(self, dt)
   	if not bombBlown then
   		for k,p in ipairs(PlayerManager.alivePlayers) do
-  			if bombIndex == k then
-  				if p:GetPressed() then
+  			if p:GetPressed() then
+  				p:Jump()
+  				if bombIndex == k then
       				bombIndex = love.math.random(#PlayerManager.alivePlayers)
     			end
   			end
@@ -92,7 +93,11 @@ state.Draw = function(self)
   		end
   		love.graphics.circle("fill", bombPosition.x, bombPosition.y + bombHeight*10, bombRadius + bombHeight*10, 16)
   	else
-  		love.graphics.print("BOOM", 1280/2, 720/2, textRot, textScale, textScale, 0, 0, 0, 0)
+  		love.graphics.setColor(1, 1, 1, 1)
+  		local text = "BOOM"
+  		local w = font:getWidth(text)
+  		local h = font:getHeight(text)
+  		love.graphics.print(text, 1280/2, 720/2, textRot, textScale, textScale, w/2, h/2, 0, 0)
   	end
 
 end

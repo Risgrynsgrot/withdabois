@@ -82,7 +82,9 @@ state.Draw = function(self)
 end
 
 state.OnLeave = function(self)
-  
+  	for k,p in ipairs(PlayerManager:GetPlayers()) do
+			p.v = nil
+	end	
 end
 
 return state

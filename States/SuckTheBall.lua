@@ -105,16 +105,14 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function()
- 	
+	love.graphics.setColor(1, 1, 1, 1)
+ 	love.graphics.circle("line", width / 2, height / 2, playFieldRadius, 64)
 	for k, v in pairs(PlayerManager:GetPlayers()) do
 		v:Draw()
 	end
 
 	love.graphics.setColor(1, 1, 1, 1)
-
-	love.graphics.circle("line", width / 2, height / 2, playFieldRadius, 64)
 	love.graphics.circle("fill", ball.x, ball.y, ball.radius, 32)
-
 
 	if winCondition == true then
 		love.graphics.setColor(winColor.r, winColor.g, winColor.b, 1)

@@ -20,9 +20,27 @@ function CreatePlayer(id, x, y)
   p.newState = false
   p.score = 0
   p.color = colors[p.colorIndex]
-  
+  p.jumpHeight = 0
+  p.jumpVel = 0
+
+  p.Jump = function(self)
+    if self.jumpHeight == 0 then
+      self.jumpVel = -200
+    end
+  end
+
   p.GetInput = function(self)
     return ((joystick ~= nil and joystick:isDown(self.id)) or love.keyboard.isDown(string.char(string.byte("a")+self.id-1)))
+  end
+
+  p.UpdateJump = function(self, dt)
+    print("jump")
+    self.jumpVel = self.jumpVel + dt * 1000
+    self.jumpHeight = self.jumpHeight + dt * self.jumpVel
+    if self.jumpHeight > 0 then
+      self.jumpVel = 0
+      self.jumpHeight = 0
+    end 
   end
 
   p.UpdateInput = function(self)
@@ -50,12 +68,12 @@ function CreatePlayer(id, x, y)
     love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b)
     love.graphics.translate(self.x, self.y)
-    love.graphics.rotate(self.r - 3.14/4)
+    --love.graphics.rotate(self.r - 3.14/4)
     love.graphics.translate(-self.x, -self.y)
     if self.controllerId == 4 then
-      love.graphics.circle("fill", self.x, self.y, self.wh, 20)
+      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, 20)
     else
-      love.graphics.circle("fill", self.x, self.y, self.wh, self.controllerId + 2)
+      love.graphics.circle("fill", self.x, self.y + self.jumpHeight, self.wh, self.controllerId + 2)
     end
     love.graphics.pop()
   end
