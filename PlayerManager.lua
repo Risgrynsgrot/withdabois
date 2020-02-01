@@ -28,10 +28,10 @@ pm.Draw = function(self)
 end
 
 pm.ResetRound = function(self)
-  pm.deadPlayers = {}
-  pm.alivePlayers = {}
+  self.deadPlayers = {}
+  self.alivePlayers = {}
   for k,v in ipairs(self.players) do
-    pm.alivePlayers[k] = pm.players
+    self.alivePlayers[k] = v
   end
 end
 

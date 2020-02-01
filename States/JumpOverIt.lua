@@ -1,6 +1,7 @@
 local state = {}
 state.vy = {}
 state.g = 1
+state.x = width * 1.5
 
 state.OnEnter = function(self)
   local slice = width / #PlayerManager:GetPlayers()
@@ -12,8 +13,10 @@ state.OnEnter = function(self)
 end
 
 state.Update = function(self, dt)
+  self.x = self.x - width * 0.1 * dt
+  
   for i,p in ipairs(PlayerManager:GetPlayers()) do
-    if p:GetPressed() then
+    if p:GetPressed() and p.y >= height then
       self.vy[i] = -20
     end
     
@@ -31,6 +34,7 @@ end
 state.Draw = function(self)
   love.graphics.scale(0.8, 0.8)
   love.graphics.rectangle("fill", 0, height + 32, width*2, 500)
+  love.graphics.rectangle("fill", self.x, height -32, 64, 64)
   PlayerManager:Draw()
 
 end
