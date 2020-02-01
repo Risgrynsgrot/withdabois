@@ -16,7 +16,7 @@ pm.GetPlayers = function(self)
 end
 
 pm.Draw = function(self)
-  for k,v in ipairs(self.alivePlayers) do
+  for k,v in ipairs(self.players) do
     v:Draw()
   end
 end
