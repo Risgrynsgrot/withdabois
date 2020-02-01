@@ -78,6 +78,8 @@ function CreatePlayer(id, x, y)
           }
           eye.vx = eye.vx - 2.0 * Dot(diff, eyeVel) * diff.x
           eye.vy = eye.vy - 2.0 * Dot(diff, eyeVel) * diff.y
+          eye.vx = eye.vx * 0.7
+          eye.vy = eye.vy * 0.7
         end
       end
       eye.x = eye.x + eye.vx
