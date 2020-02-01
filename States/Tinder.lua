@@ -31,7 +31,6 @@ local DrawPlayerWithArrow = function(self, x, y)
 		self.y = y
 
 		self:Draw()
-		love.graphics.line(self.x, self.y, self.x + math.cos(self.r) * self.wh  *2, self.y + math.sin(self.r) * self.wh * 2)
 
 		self.x = oldX
 		self.y = oldY
