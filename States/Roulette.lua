@@ -64,18 +64,18 @@ state.Draw = function(self)
     local lx = width / 2 + math.cos(angle - self.slice * 0.5) * r
     local ly = height / 2 + math.sin(angle - self.slice * 0.5) * r
     love.graphics.line(width / 2, height / 2, lx, ly)
-    if (21 - i) ~= self.deadId then
-      PlayerManager:GetPlayers()[21 - i].x = px
-      PlayerManager:GetPlayers()[21 - i].y = py
+    if (#PlayerManager:GetPlayers() + 1 - i) ~= self.deadId then
+      PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].x = px
+      PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].y = py
     else
-      PlayerManager:GetPlayers()[21 - i].x = PlayerManager:GetPlayers()[21 - i].x + state.vx
-      PlayerManager:GetPlayers()[21 - i].y = PlayerManager:GetPlayers()[21 - i].y + state.vy
+      PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].x = PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].x + state.vx
+      PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].y = PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i].y + state.vy
     end
     
-    PlayerManager:GetPlayers()[21 - i]:Draw()
+    PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i]:Draw()
     if self.deadId  > 0 then
       if love.math.random(4) == 3 then 
-        PlayerManager:GetPlayers()[21 - i]:Jump()
+        PlayerManager:GetPlayers()[#PlayerManager:GetPlayers()+1 - i]:Jump()
       end
     end
   end

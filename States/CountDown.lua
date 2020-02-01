@@ -13,6 +13,18 @@ local endTimer = 5
 
 
 state.OnEnter = function(self)
+
+     timers = {}
+     stopped = {}
+     score = {}
+     time = 0
+     targetTime = 10
+     alpha = 0
+     alphaTime = targetTime / 2
+     ended = false
+     endTimer = 5
+
+
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         p.x = width / #PlayerManager:GetPlayers() * k - (p.wh)
         p.y = height * 0.75
@@ -54,6 +66,7 @@ state.Update = function(self, dt)
 
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         if p:GetPressed() and stopped[k] == false then
+            p:Jump()
             timers[k] = time
             stopped[k] = true
         end

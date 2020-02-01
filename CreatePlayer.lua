@@ -137,6 +137,12 @@ function CreatePlayer(id, x, y)
     return self.newState == false
   end
 
+  p.ResetVisuals = function(self)
+    self.scale = 1
+    self.wh = 32
+    self.r = 0
+  end
+
   p.Draw = function(self)
     love.graphics.push()
     love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)

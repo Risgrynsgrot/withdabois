@@ -23,13 +23,13 @@ end
  
 
 local scoreTable = { }
-local scoreValue = { }
 
 local timer = 4
 
 state.OnEnter = function(self)
 
 	timer = 4
+	scoreTable = { }
 
 	for k, p in ipairs(PlayerManager:GetPlayers()) do
 			table.insert(scoreTable, p)
@@ -55,6 +55,10 @@ state.Update = function(self, dt)
 			p.x = lerp(p.x, width *  (#PlayerManager:GetPlayers() / 10) / 2 - p.wh * 2, 0.05 + (height - p.y) / height * 0.01)
 		else 
 			p.x = lerp(p.x, -p.wh * 4, 0.05 + (height - p.y) / height * 0.01)
+		end
+
+		if p:GetPressed() then
+		    p:Jump()
 		end
 	end
 

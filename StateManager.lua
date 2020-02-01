@@ -21,12 +21,11 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/CountDown"))
  table.insert(self.states, require("States/Tinder"))
  table.insert(self.states, require("States/Run"))
- --table.insert(self.states, require("States/Roulette"))
+ table.insert(self.states, require("States/Roulette"))
  table.insert(self.states, require("States/CongaLine"))
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
-
 
 self.states["intermission"] = require("States/ScoreBoard")
 self.currentState = "intermission"
@@ -45,7 +44,10 @@ stateManager.Update = function(self, dt)
     if (self.states[self.currentState]:Update(dt)) then
       
       self.states[self.currentState]:OnLeave() 
-      
+      for k, p in ipairs(PlayerManager:GetPlayers()) do
+        p:ResetVisuals()
+      end
+
       PlayerManager:ResetRound()
       local old = self.currentState
       
