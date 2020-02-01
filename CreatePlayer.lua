@@ -16,6 +16,8 @@ function CreatePlayer(id, x, y)
   p.id = id
   p.colorIndex = ((id - 1) % 5) + 1
   p.controllerId = math.ceil(id / 5)
+  p.oldState = false
+  p.newState = false
   p.score = 0
   p.color = colors[p.colorIndex]
   
@@ -25,6 +27,10 @@ function CreatePlayer(id, x, y)
     else
       return false
     end
+  end
+  
+   p.GetPressed = function(self)
+    return self.newState == true and p.oldState == false
   end
   
   p.Draw = function(self)
