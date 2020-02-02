@@ -66,6 +66,7 @@ stateManager.Init = function(self)
  self.currentState = #self.states - 2
   self:Shuffle()
  self.intermissionCounter = 0
+ self.oldState = 1
  
  --self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
@@ -78,21 +79,26 @@ stateManager.Update = function(self, dt)
   else
     PlayerManager:Update(dt)
     if (self.states[self.currentState]:Update(dt)) then
-
       self.states[self.currentState]:OnLeave() 
       for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:ResetVisuals()
       end
+      
 
       PlayerManager:ResetRound()
-     
-
+      
       if gameover then 
         self.currentState = 16 -- WinScreen
       elseif self.intermissionCounter < 5 then
-        self.currentState = self.currentState + 1
         
-        if self.currentState == #self.states - 2 then
+        
+        if self.intermissionCounter == 0 then
+          self.currentState  = self.oldState
+        else
+          self.currentState = self.currentState + 1
+        end
+        
+        if self.currentState >= (#self.states - 2) then
           self.currentState = 1
           self:Shuffle()
         end
@@ -101,10 +107,13 @@ stateManager.Update = function(self, dt)
         currentPitch = currentPitch + 1/24
         music:setPitch(currentPitch)
       else -- player 2
+        self.oldState = self.currentState + 1
         self.currentState = #self.states - 1 --intermission is at last index
         self.intermissionCounter = 0
       end
       
+      
+      print( self.currentState)
       r,g,b= HSV(love.math.random(255),128,128)
       love.graphics.setBackgroundColor(r/255,g/255,b/255)
 
