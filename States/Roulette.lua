@@ -26,6 +26,13 @@ state.Update = function(self, dt)
     self.r = self.r + self.racc
     self.racc = self.racc - 0.0002
     self.racc = math.max(self.racc, 0)
+    if self.racc == 0 then
+      for k,p in ipairs(PlayerManager:GetPlayers()) do
+        if self.p ~= p then
+          p:AddScore()
+        end
+      end
+    end
   else
     self.deadId = i
     self.vy = self.vy + 1
