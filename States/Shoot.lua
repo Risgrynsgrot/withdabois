@@ -33,6 +33,7 @@ end
 state.Draw = function(self)
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         if isDead[k] == false then
+            love.graphics.setLineWidth(5)
             p:Draw()
             local playerTargetIndex = targets[k]
             if(isDead[playerTargetIndex] == false) then

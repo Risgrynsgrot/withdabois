@@ -85,7 +85,7 @@ stateManager.Draw = function(self)
     love.graphics.setColor(0, 0, 0, alpha)
     local w = font:getWidth(self.titleText)
     local h = font:getHeight(self.titleText)
-    love.graphics.print(self.titleText, width/2, height/2, 0.1, 1, 1, w/2, h/2, 0, 0)
+    love.graphics.print(self.titleText, width/2, height/2, math.sin(love.timer.getTime()*10)*0.1, 1, 1, w/2, h/2, 0, 0)
   end
 end
 

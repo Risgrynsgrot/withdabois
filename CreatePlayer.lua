@@ -20,7 +20,7 @@ function CreatePlayer(id, x, y)
   p.oldState = false
   p.newState = false
   p.score = 0
-  p.scoreTimer = 0
+  p.scoreTimer = 100
   p.color = colors[p.colorIndex]
   p.color.a = 1
 
@@ -60,7 +60,7 @@ function CreatePlayer(id, x, y)
       local distance = math.sqrt(eye.x*eye.x + eye.y*eye.y)
       --if the ball hits the arena limit
       if distance >= eye.rad - eye.innerRad then
-        if distance >= eye.rad + eye.innerRad then
+        if distance >= eye.rad then
           eye.x = 0
           eye.y = 0
           eye.vx = 0

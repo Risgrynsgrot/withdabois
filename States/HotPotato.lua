@@ -20,6 +20,28 @@ local Explode = function()
 			PlayerManager:EliminatePlayer(p)
 		end
 	end
+  local newParticle = CreateParticleStruct()
+  
+  newParticle.minSpeed = 10
+  newParticle.maxSpeed = 50
+
+  newParticle.color.r = 1
+  newParticle.color.g = 0.6
+  newParticle.color.b = 0
+  newParticle.color.a = 1
+
+
+  newParticle.shape = 5
+  newParticle.startSize = 4
+  newParticle.endSize = 40
+  newParticle.lifetime = 1
+  
+  newParticle.angle = 0
+  newParticle.spread = 6.28
+  newParticle.gravity.y = 0
+  newParticle.fadeSpeed = 0.01
+  
+  ParticleManager:SpawnParticle(newParticle,10,{x=bombPosition.x,y=bombPosition.y})
 end
 
 local textScale = 0
@@ -50,9 +72,9 @@ state.Update = function(self, dt)
   		for k,p in ipairs(PlayerManager.alivePlayers) do
   			if p:GetPressed() then
   				p:Jump()
-  				if bombIndex == k then
-      				bombIndex = love.math.random(#PlayerManager.alivePlayers)
-    			end
+          while bombIndex == k do
+            bombIndex = love.math.random(#PlayerManager.alivePlayers)
+          end 
   			end
   		end
   		local xDiff = (PlayerManager.alivePlayers[bombIndex].x - bombPosition.x) * bombSpeed
