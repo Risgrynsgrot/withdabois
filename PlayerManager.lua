@@ -14,6 +14,7 @@ end
 
 pm.JoinGame = function(self, id)
     table.insert(self.players, self.allPlayers[id])
+    table.insert(self.alivePlayers, self.allPlayers[id])
 end
 
 pm.GetPlayers = function(self)
