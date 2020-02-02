@@ -57,13 +57,13 @@ stateManager.Update = function(self, dt)
       local old = self.currentState
       
       if self.intermissionCounter < 5 then
-        --repeat
-          --self.currentState = love.math.random(#self.states - 2)
-          self.currentState = self.currentState + 1
-          if self.currentState >= #self.states - 2 then
-              self.currentState = 1
-          end
-        --until self.currentState ~= old      
+        repeat
+          self.currentState = love.math.random(#self.states - 2)
+          --self.currentState = self.currentState + 1
+          --if self.currentState >= #self.states - 2 then
+          --    self.currentState = 1
+          --end
+        until self.currentState ~= old      
          self.intermissionCounter = self.intermissionCounter + 1
       else 
         self.currentState = #self.states --intermission is at last index

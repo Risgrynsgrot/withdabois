@@ -5,8 +5,17 @@ local isDead = {}
 
 local gameIsFinished = false
 local timeToReturn = 2
+local scoreGiven = false
 
 state.Update = function(self, dt)
+
+    if not scoreGiven then
+        for k, p in ipairs(PlayerManager.alivePlayers) do
+            p:AddScore()
+        end
+        scoreGiven = true
+    end
+
     if gameIsFinished then
         timeToReturn = timeToReturn - dt
         if timeToReturn < 0 then return true end
@@ -46,6 +55,7 @@ end
 
 state.OnEnter = function()
     timeToReturn = 2
+    scoreGiven = false
     gameIsFinished = false
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         targets[k] = k
