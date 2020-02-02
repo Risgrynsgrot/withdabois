@@ -30,6 +30,21 @@ stateManager.ShowTitle = function(self, text)
   print(text)
 end
 
+stateManager.Shuffle = function(self)
+  
+  for i = 1, #self.states - 3 do
+    local ri = love.math.random(1, #self.states - 3)
+    local temp = self.states[i]
+    self.states[i] = self.states[ri]
+    self.states[ri] = temp
+  end
+  
+  for i = 1, #self.states - 3 do
+    print(self.states[i].name)
+  end
+  
+end
+
 stateManager.Init = function(self)
  table.insert(self.states, require("States/JumpOverIt"))
  table.insert(self.states, require("States/HotPotato"))
@@ -49,7 +64,7 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 2
-
+  self:Shuffle()
  self.intermissionCounter = 0
  
  --self.currentState = love.math.random(#self.states)
@@ -75,10 +90,13 @@ stateManager.Update = function(self, dt)
       if gameover then 
         self.currentState = 16 -- WinScreen
       elseif self.intermissionCounter < 5 then
-        local old = self.currentState
-        repeat
-          self.currentState = love.math.random(#self.states - 3)
-        until self.currentState ~= old
+        self.currentState = self.currentState + 1
+        
+        if self.currentState == #self.states - 2 then
+          self.currentState = 1
+          self:Shuffle()
+        end
+        
         self.intermissionCounter = self.intermissionCounter + 1
         currentPitch = currentPitch + 1/24
         music:setPitch(currentPitch)
