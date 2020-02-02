@@ -35,6 +35,14 @@ local GetNoramlized = function(vector)
   return  returnVector
 end
 
+local tablefind = function(tab,el)
+	for index, value in pairs(tab) do
+	     if value == el then
+	         return index
+	     end
+	 end
+end
+
 
 state.Update = function(self, dt)
   self.timer = self.timer - dt
@@ -162,7 +170,7 @@ state.Update = function(self, dt)
   else
   
     if self.longestHead.id == 0 then
-      longestHead.id = PlayerManager.alivePlayers[1].id
+      self.longestHead.id = PlayerManager.alivePlayers[1].id
       for k,v in ipairs(PlayerManager.alivePlayers) do
         if v.back ~= 0 then
           
@@ -183,21 +191,40 @@ state.Update = function(self, dt)
 
       local currentPlayer = self.longestHead.id
       PlayerManager.alivePlayers[currentPlayer]:AddScore()
+      table.insert(self.winners,PlayerManager.alivePlayers[currentPlayer])
       while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
         currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
         PlayerManager.alivePlayers[currentPlayer]:AddScore()
+        table.insert(self.winners,PlayerManager.alivePlayers[currentPlayer])
       end
+      
+      for lk,lv in ipairs(PlayerManager.alivePlayers) do
+        if not tablefind(self.winners,lv) then
+          table.insert(self.losers,lv)
+        end
+      end
+      
     end
 
-    local currentPlayer = self.longestHead.id
-    if  RandomFloat(0,1) > 0.5 then
-      PlayerManager.alivePlayers[currentPlayer]:Jump()
-    end
-    while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
-      currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
-      if  RandomFloat(0,1) > 0.5 then
-        PlayerManager.alivePlayers[currentPlayer]:Jump()
+    --local currentPlayer = self.longestHead.id
+    --if  RandomFloat(0,1) > 0.5 then
+    --  PlayerManager.alivePlayers[currentPlayer]:Jump()
+    --end
+    --while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
+    --  currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
+    --  if  RandomFloat(0,1) > 0.5 then
+    --    PlayerManager.alivePlayers[currentPlayer]:Jump()
+    --  end
+    --end
+    
+    for wk,wv in ipairs(self.winners) do
+      if RandomFloat(0,1) > 0.8 then
+        wv:Jump()
       end
+    end
+    
+    for lk,lv in ipairs(self.losers) do
+      lv.y = lv.y + 5 * lv.y * dt 
     end
   
   
@@ -286,14 +313,14 @@ state.OnEnter = function(self)
     
   end
   
-  state.timer = 20
+  self.timer = 20
   self.endTimer = 0
   self.longestHead = {
     id = 0,
     length = 0
   }
-  state.losers = {}
-  state.winners = {}
+  self.losers = {}
+  self.winners = {}
 end
 
 state.OnLeave = function(self)
@@ -305,6 +332,8 @@ state.OnLeave = function(self)
     v.turning = nil
     v.r = 0
   end
+  
+  
 end
 
 return state
