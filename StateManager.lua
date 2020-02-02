@@ -26,14 +26,20 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
-
-self.states["intermission"] = require("States/ScoreBoard")
-self.currentState = "intermission"
-self.intermissionCounter = 0
+ table.insert(self.states, require("States/Lobby"))
+ table.insert(self.states, require("States/ScoreBoard"))
  
- self.currentState = love.math.random(#self.states)
-  self.currentState = 10
+ --self.currentState = love.math.random(#self.states)
+ self.currentState = #self.states - 1
 
+--self.states["intermission"] = require("States/ScoreBoard")
+--self.currentState = "intermission"
+  self.intermissionCounter = 0
+ 
+  self.currentState = love.math.random(#self.states)
+  --self.currentState = 10
+
+ --self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
  self:ShowTitle(self.states[self.currentState].name)
 end
@@ -54,12 +60,16 @@ stateManager.Update = function(self, dt)
       local old = self.currentState
       
       if self.intermissionCounter < 5 then
-        repeat
-          self.currentState = love.math.random(#self.states)
-        until self.currentState ~= old      
+        --repeat
+          --self.currentState = love.math.random(#self.states - 2)
+          self.currentState = self.currentState + 1
+          if self.currentState >= #self.states - 2 then
+              self.currentState = 1
+          end
+        --until self.currentState ~= old      
          self.intermissionCounter = self.intermissionCounter + 1
       else 
-        self.currentState = "intermission"
+        self.currentState = #self.states --intermission is at last index
         self.intermissionCounter = 0
       end
 
@@ -78,7 +88,7 @@ stateManager.Draw = function(self)
     love.graphics.setColor(0, 0, 0, alpha)
     local w = font:getWidth(self.titleText)
     local h = font:getHeight(self.titleText)
-    love.graphics.print(self.titleText, width/2, height/2, 0.1, 1, 1, w/2, h/2, 0, 0)
+    love.graphics.print(self.titleText, width/2, height/2, math.sin(love.timer.getTime()*10)*0.1, 1, 1, w/2, h/2, 0, 0)
   end
 end
 

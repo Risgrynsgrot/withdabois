@@ -1,25 +1,36 @@
 local pm = {}
 
 pm.players = {}
+pm.allPlayers = {}
 pm.alivePlayers = {}
 pm.deadPlayers = {}
 
 pm.Init = function(self)
-  for i = 1,7 do
-    pm.players[i] = CreatePlayer(i, i * 38 - 16, 400)
-    pm.alivePlayers[i] = pm.players[i]
+  for i = 1,20 do
+    self.allPlayers[i] = CreatePlayer(i, i * 38 - 16, 400)
+    self.alivePlayers[i] = self.players[i]
   end
+end
+
+pm.JoinGame = function(self, id)
+    table.insert(self.players, self.allPlayers[id])
 end
 
 pm.GetPlayers = function(self)
   return self.players
 end
 
+pm.GetAllPlayers = function(self)
+    return self.allPlayers
+end
+
 pm.Update = function(self, dt)
   for k,v in ipairs(self.players) do
-    v:UpdateInput()
     v:UpdateJump(dt)
     v:UpdateEyes(dt)
+  end
+  for k, v in ipairs(self.allPlayers) do
+      v:UpdateInput()
   end
 end
 
