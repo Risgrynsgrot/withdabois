@@ -7,9 +7,34 @@ local gameIsFinished = false
 local timeToReturn = 2
 local scoreGiven = false
 
+state.AddSmoke = function(x, y)
+    local newParticle = CreateParticleStruct()
+
+    newParticle.minSpeed = 10
+    newParticle.maxSpeed = 90
+
+    newParticle.color.r = 0.7
+    newParticle.color.g = 0.7
+    newParticle.color.b = 0.7
+    newParticle.color.a = 1
+
+
+    newParticle.shape = 5
+    newParticle.startSize = 400
+    newParticle.endSize = 2000
+    newParticle.lifetime = 5
+
+    newParticle.angle = 0
+    newParticle.spread = 6.28
+    newParticle.gravity.y = -1
+    newParticle.fadeSpeed = 0.06
+
+    ParticleManager:SpawnParticle(newParticle,10,{x=x,y=y})
+end
+
 state.Update = function(self, dt)
 
-    if not scoreGiven then
+    if not scoreGiven and gameIsFinished then
         for k, p in ipairs(PlayerManager.alivePlayers) do
             p:AddScore()
         end
@@ -23,6 +48,7 @@ state.Update = function(self, dt)
 
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         if p:GetPressed() and isDead[k] == false then
+            self.AddSmoke(p.x, p.y)
             local playerTarget = PlayerManager:GetPlayers()[targets[k]]
             isDead[targets[k]] = true
             PlayerManager:EliminatePlayer(playerTarget)

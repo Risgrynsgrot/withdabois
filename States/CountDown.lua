@@ -3,7 +3,6 @@ state.name = "Countdown!"
 
 local timers = {}
 local stopped = {}
-local score = {}
 local time = 0
 local targetTime = 10
 local alpha = 0
@@ -14,15 +13,14 @@ local endTimer = 5
 
 state.OnEnter = function(self)
 
-     timers = {}
-     stopped = {}
-     score = {}
-     time = 0
-     targetTime = 10
-     alpha = 0
-     alphaTime = targetTime / 2
-     ended = false
-     endTimer = 5
+    timers = {}
+    stopped = {}
+    time = 0
+    targetTime = 10
+    alpha = 0
+    alphaTime = targetTime / 2
+    ended = false
+    endTimer = 5
 
 
     for k, p in ipairs(PlayerManager:GetPlayers()) do
@@ -33,16 +31,22 @@ state.OnEnter = function(self)
     time = targetTime
     for k,p in ipairs(PlayerManager:GetPlayers()) do
         stopped[k] = false
-        timers[k] = 0
+        timers[k] = -5
     end
 end
 
 function End()
 
+    local bestScoreIndex = -1
+    local bestTime = 100000
     for k, p in ipairs(PlayerManager:GetPlayers()) do
+        if math.abs(timers[k]) < bestTime then
+            bestScoreIndex = k
+        end
         p.x = (width / #PlayerManager:GetPlayers()) * (k-0.5)
         p.y = height / 2 + timers[k] * 100
     end
+    PlayerManager:GetPlayers()[bestScoreIndex]:GiveScore()
     ended = true
 end
 state.Update = function(self, dt)
@@ -81,6 +85,8 @@ state.Draw = function(self)
     if ended then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.line(0, height / 2, width, height / 2)
+        love.graphics.print("-5", 32, height / 6)
+        love.graphics.print("5", 32, height * 5 / 6)
     end
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:Draw()
