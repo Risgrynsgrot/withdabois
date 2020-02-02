@@ -13,11 +13,11 @@ stateManager.ShowTitle = function(self, text)
 end
 
 stateManager.Init = function(self)
- table.insert(self.states, require("States/SuckTheBall"))
  table.insert(self.states, require("States/JumpOverIt"))
  table.insert(self.states, require("States/HotPotato"))
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
+ table.insert(self.states, require("States/SuckTheBall"))
  table.insert(self.states, require("States/CountDown"))
  table.insert(self.states, require("States/Tinder"))
  table.insert(self.states, require("States/Run"))
@@ -26,8 +26,6 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
- table.insert(self.states, require("States/DontPop"))
-
  table.insert(self.states, require("States/Lobby"))
  table.insert(self.states, require("States/ScoreBoard"))
  
@@ -56,11 +54,11 @@ stateManager.Update = function(self, dt)
       end
 
       PlayerManager:ResetRound()
-      local old = 7 --self.currentState
+      local old = self.currentState
       
       if self.intermissionCounter < 5 then
         repeat
-          self.currentState = 1 --love.math.random(#self.states - 2)
+          self.currentState = love.math.random(#self.states - 2)
           --self.currentState = self.currentState + 1
           --if self.currentState >= #self.states - 2 then
           --    self.currentState = 1
