@@ -26,7 +26,7 @@ state.OnEnter = function(self)
 
 
     for k, p in ipairs(PlayerManager:GetPlayers()) do
-        p.x = width / #PlayerManager:GetPlayers() * k - (p.wh)
+        p.x = (width / #PlayerManager:GetPlayers()) * (k-0.5)
         p.y = height * 0.75
     end
     ended = false
@@ -40,7 +40,7 @@ end
 function End()
 
     for k, p in ipairs(PlayerManager:GetPlayers()) do
-        p.x = width / #PlayerManager:GetPlayers() * (k - 1)
+        p.x = (width / #PlayerManager:GetPlayers()) * (k-0.5)
         p.y = height / 2 + timers[k] * 100
     end
     ended = true
