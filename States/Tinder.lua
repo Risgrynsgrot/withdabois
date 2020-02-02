@@ -169,7 +169,7 @@ state.Update = function(self, dt)
   	end
 
 	winTimer = winTimer - dt
-  	winCondition = (#unpairedPlayers <= 2)
+  	winCondition = (#unpairedPlayers <= 2) or (tinTimer <= 0)
 
   return false
 end
