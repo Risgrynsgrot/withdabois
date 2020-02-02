@@ -161,9 +161,12 @@ function CreatePlayer(id, x, y)
       love.graphics.circle("fill", self.x + eye.offx + eye.x, self.y + self.jumpHeight + eye.offy + eye.y, eye.innerRad, 16)
     end
 
-    love.graphics.setColor(1, 1, 1, (1-self.scoreTimer)*2)
+    
     local w = font:getWidth("+1")
     local h = font:getHeight("+1")
+    love.graphics.setColor(0, 0, 0, (1-self.scoreTimer)*2)
+    love.graphics.print( "+1", self.x + 10, self.y - (self.scoreTimer*self.scoreTimer)*50 + 10, math.sin(self.scoreTimer)*0.1, math.max(self.scoreTimer/10, 1), math.max(self.scoreTimer/10, 1), w/2, h/2)
+    love.graphics.setColor(1, 1, 1, (1-self.scoreTimer)*2)
     love.graphics.print( "+1", self.x, self.y - (self.scoreTimer*self.scoreTimer)*50, math.sin(self.scoreTimer)*0.1, math.max(self.scoreTimer/10, 1), math.max(self.scoreTimer/10, 1), w/2, h/2)
     love.graphics.setColor(1, 1, 1, 1)
 

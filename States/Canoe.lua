@@ -16,16 +16,16 @@ state.OnEnter = function(self)
   	self.overTime = 3
   	self.winnerIndex = 0
   	for k, p in ipairs(PlayerManager.alivePlayers) do
-  		if self.canoes[p.controllerId] == nil then
-  			self.canoes[p.controllerId] = {}
-  			self.canoes[p.controllerId].speed = 0
-  			self.canoes[p.controllerId].force = 0
-  			self.canoes[p.controllerId].pos = 0
-  			self.canoes[p.controllerId].strokeTimer = 0 -- if stroke in progress
-  			self.canoes[p.controllerId].isStroking = false
-  			self.canoes[p.controllerId].players = {}
+  		if self.canoes[p.colorIndex] == nil then
+  			self.canoes[p.colorIndex] = {}
+  			self.canoes[p.colorIndex].speed = 0
+  			self.canoes[p.colorIndex].force = 0
+  			self.canoes[p.colorIndex].pos = 0
+  			self.canoes[p.colorIndex].strokeTimer = 0 -- if stroke in progress
+  			self.canoes[p.colorIndex].isStroking = false
+  			self.canoes[p.colorIndex].players = {}
   		end
-  		table.insert(self.canoes[p.controllerId].players, p)
+  		table.insert(self.canoes[p.colorIndex].players, p)
   		p.hasClicked = false
   	end
   	for k, canoe in ipairs(self.canoes) do
@@ -40,7 +40,7 @@ state.AddSplash = function(x, y)
   local newParticle = CreateParticleStruct()
   
   newParticle.minSpeed = 10
-  newParticle.maxSpeed = 50
+  newParticle.maxSpeed = 90
 
   newParticle.color.r = 0.2
   newParticle.color.g = 0.2
@@ -49,16 +49,16 @@ state.AddSplash = function(x, y)
 
 
   newParticle.shape = 5
-  newParticle.startSize = 4
-  newParticle.endSize = 40
+  newParticle.startSize = 3
+  newParticle.endSize = 30
   newParticle.lifetime = 1
   
   newParticle.angle = 0
   newParticle.spread = 6.28
   newParticle.gravity.y = 0
-  newParticle.fadeSpeed = 0.01
+  newParticle.fadeSpeed = 0.03
   
-  ParticleManager:SpawnParticle(newParticle,10,{x=bombPosition.x,y=bombPosition.y})
+  ParticleManager:SpawnParticle(newParticle,10,{x=x,y=y})
 end
 
 state.Update = function(self, dt)
@@ -85,9 +85,9 @@ state.Update = function(self, dt)
 	  						canoe.strokeTimer = self.strokeTime
 	  						p.hasClicked = true
 	  						p:Jump()
+	  						self.AddSplash(canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players, (k-0.5) * height/#self.canoes + self.canoeHeight)
 	  						if #canoe.players == 1 then
 	  							canoe.force = canoe.force + self.strokeForce * self.strokeTime * #canoe.players
-	  							self.AddSplash(canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players, (k-0.5) * height/#self.canoes + self.canoeHeight)
 	  						end
 	  					end
 	  				else
