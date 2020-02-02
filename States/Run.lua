@@ -36,6 +36,11 @@ state.Update = function(self, dt)
   end
   
   if #PlayerManager.alivePlayers == 1 then
+    if self.t == 2 then
+      for i,p in ipairs(PlayerManager.alivePlayers) do
+        p:AddScore()
+      end
+    end
     self.t = self.t - dt
   end
   
