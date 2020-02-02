@@ -41,14 +41,14 @@ state.Draw = function(self)
 	self.scoreTable[1]:Draw()
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.rectangle("fill", x-w/2, y+64, w, height)
-	local w = font:getWidth("#1")
+	local fw = font:getWidth("#1")
     local h = font:getHeight("#1")
     local time = love.timer.getTime()
 
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print( "#1", x, y + 128, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+    love.graphics.print( "1", x, y - 128, math.sin(time * 3)*0.1, 1, 1, fw/2, h/2)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print( "#1", x + 10, y + 128 + 10, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+    love.graphics.print( "1", x + 10, y - 128 + 10, math.sin(time * 3)*0.1, 1, 1, fw/2, h/2)
     love.graphics.setColor(1, 1, 1, 1)
 
 	if #self.scoreTable > 1 then
@@ -61,9 +61,9 @@ state.Draw = function(self)
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle("fill", x-w/2, y+64, w, height)
 		love.graphics.setColor(0, 0, 0, 1)
-	    love.graphics.print( "#2", x, y + 128, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+	    love.graphics.print( "2", x, y - 128, math.sin(time * 2)*0.1, 1, 1, fw/2, h/2)
 	    love.graphics.setColor(1, 1, 1, 1)
-	    love.graphics.print( "#2", x + 10, y + 128 + 10, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+	    love.graphics.print( "2", x + 10, y - 128 + 10, math.sin(time * 2)*0.1, 1, 1, fw/2, h/2)
 	    love.graphics.setColor(1, 1, 1, 1)
 	end
 	if #self.scoreTable > 2 then
@@ -76,11 +76,14 @@ state.Draw = function(self)
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.rectangle("fill", x-w/2, y+64, w, height)
 		love.graphics.setColor(0, 0, 0, 1)
-	    love.graphics.print( "#3", x, y + 128, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+	    love.graphics.print( "3", x, y - 128, math.sin(time)*0.1, 1, 1, fw/2, h/2)
 	    love.graphics.setColor(1, 1, 1, 1)
-	    love.graphics.print( "#3", x + 10, y + 128 + 10, math.sin(time)*0.1, math.max(time/10, 1), math.max(time/10, 1), w/2, h/2)
+	    love.graphics.print( "3", x + 10, y - 128 + 10, math.sin(time)*0.1, 1, 1, fw/2, h/2)
 	    love.graphics.setColor(1, 1, 1, 1)
 	end
+
+	love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print( "Congrats!", width/2, height*0.2, -0.1, 1, 1, font:getWidth("Congrats!")/2, font:getHeight("Congrats!")/2)
 end
 
 state.OnLeave = function(self)

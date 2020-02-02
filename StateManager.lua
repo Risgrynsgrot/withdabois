@@ -1,4 +1,5 @@
 local stateManager = {}
+local currentPitch = 1
 
 stateManager.states = {}
 stateManager.currentState = 0
@@ -67,6 +68,7 @@ stateManager.Update = function(self, dt)
           end
         until self.currentState ~= old      
         self.intermissionCounter = self.intermissionCounter + 1
+        music:setPitch(currentPitch)
       else -- player 2
         self.scoreTable[2].x = width/2
         self.scoreTable[2].y = height/2

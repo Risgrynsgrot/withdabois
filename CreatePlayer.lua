@@ -109,7 +109,7 @@ function CreatePlayer(id, x, y)
   p.AddScore = function(self)
     self.score = self.score + 1
     self.scoreTimer = 0
-    gameover = true
+    --gameover = true
     if self.score >= 20 then 
       gameover = true
     end
