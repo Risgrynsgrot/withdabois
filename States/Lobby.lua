@@ -14,7 +14,16 @@ end
 state.Update = function(self, dt)
     for k, p in ipairs(PlayerManager:GetAllPlayers()) do
         if p:GetPressed() then
-            PlayerManager:JoinGame(k)
+            local joined = false
+            for k2, p2 in ipairs(PlayerManager:GetPlayers()) do
+                if p2 == p then
+                    joined = true
+                    break
+                end
+            end
+            if not joined then
+                PlayerManager:JoinGame(k)
+            end
         end
     end
     return love.keyboard.isDown("space")
