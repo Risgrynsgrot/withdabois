@@ -1,4 +1,3 @@
-local currentPitch = 1
 function HSV(h, s, v)
     if s <= 0 then return v,v,v end
     h, s, v = h/256*6, s/255, v/255
@@ -15,6 +14,7 @@ function HSV(h, s, v)
 end
 
 local stateManager = {}
+local currentPitch = 1
 
 stateManager.states = {}
 stateManager.currentState = 0
@@ -46,11 +46,11 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/Push"))
  table.insert(self.states, require("States/Lobby"))
  table.insert(self.states, require("States/ScoreBoard")) --15
- 
+ table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
- self.currentState = #self.states - 1
+ self.currentState = #self.states - 2
 
-self.intermissionCounter = 0
+ self.intermissionCounter = 0
  
  --self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
@@ -63,29 +63,27 @@ stateManager.Update = function(self, dt)
   else
     PlayerManager:Update(dt)
     if (self.states[self.currentState]:Update(dt)) then
-      
+
       self.states[self.currentState]:OnLeave() 
       for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:ResetVisuals()
       end
 
       PlayerManager:ResetRound()
-      local old = self.currentState
+     
 
-      if self.intermissionCounter < 5 then
+      if gameover then 
+        self.currentState = 16 -- WinScreen
+      elseif self.intermissionCounter < 5 then
+        local old = self.currentState
         repeat
-          self.currentState = love.math.random(#self.states - 2)
-          --self.currentState = 4
-          --self.currentState = self.currentState + 1
-          if self.currentState >= #self.states - 2 then
-              self.currentState = 1
-          end
-        until self.currentState ~= old      
+          self.currentState = love.math.random(#self.states - 3)
+        until self.currentState ~= old
+        self.intermissionCounter = self.intermissionCounter + 1
         currentPitch = currentPitch + 1/24
         music:setPitch(currentPitch)
-         self.intermissionCounter = self.intermissionCounter + 1
-      else 
-        self.currentState = #self.states --intermission is at last index
+      else -- player 2
+        self.currentState = #self.states - 1 --intermission is at last index
         self.intermissionCounter = 0
       end
       
@@ -102,7 +100,7 @@ stateManager.Draw = function(self)
   self.states[self.currentState]:Draw()
   local alpha = (self.titleTime - self.titleTimer) * 10
   if alpha > 0 then
-    love.graphics.setColor(1, 1, 1, alpha)
+    love.graphics.setColor(0.6, 0.6, 0.6, alpha)
     love.graphics.rectangle("fill", 0, 0, width, height)
     love.graphics.setColor(0, 0, 0, alpha)
     local w = font:getWidth(self.titleText)

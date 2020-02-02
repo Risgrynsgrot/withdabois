@@ -40,7 +40,7 @@ function End()
     local bestScoreIndex = -1
     local bestTime = 100000
     for k, p in ipairs(PlayerManager:GetPlayers()) do
-        if math.abs(timers[k]) < bestTime then
+        if stopped[k] and math.abs(timers[k]) < bestTime then
             bestScoreIndex = k
         end
         p.x = (width / #PlayerManager:GetPlayers()) * (k-0.5)
