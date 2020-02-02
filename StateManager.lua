@@ -118,7 +118,7 @@ stateManager.Draw = function(self)
   self.states[self.currentState]:Draw()
   local alpha = (self.titleTime - self.titleTimer) * 10
   if alpha > 0 then
-    love.graphics.setColor(1, 1, 1, alpha)
+    love.graphics.setColor(0.6, 0.6, 0.6, alpha)
     love.graphics.rectangle("fill", 0, 0, width, height)
     love.graphics.setColor(0, 0, 0, alpha)
     local w = font:getWidth(self.titleText)

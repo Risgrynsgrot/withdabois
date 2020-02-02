@@ -72,13 +72,13 @@ state.Update = function(self, dt)
   	if not bombBlown then
   		for k,p in ipairs(PlayerManager.alivePlayers) do
   			if p:GetPressed() then
-  				p:Jump()
-          if bombLanded then
+          if bombLanded and self.jumpHeight == 0 then
             bombLanded = false
             while bombIndex == k do
               bombIndex = love.math.random(#PlayerManager.alivePlayers)
             end 
           end
+          p:Jump()
   			end
   		end
   		local xDiff = (PlayerManager.alivePlayers[bombIndex].x - bombPosition.x) * bombSpeed
