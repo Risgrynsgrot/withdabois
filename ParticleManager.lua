@@ -38,7 +38,8 @@ CreateParticleStruct = function()
     maxSpeed = 0.0,
     lifetime = 0.0,
     startSize = 0.0,
-    endSize = 0.0
+    endSize = 0.0,
+    fadeSpeed = 0.0
   }
   return pstruct
 end
@@ -86,6 +87,7 @@ ParticleManager.Update = function(self,dt)
     local currentParticle = self.particles[index]
     
     currentParticle.timer = currentParticle.timer + dt
+    currentParticle.color.a = currentParticle.color.a - currentParticle.fadeSpeed
     
     if  currentParticle.timer < currentParticle.lifetime then
     

@@ -31,7 +31,7 @@ self.states["intermission"] = require("States/ScoreBoard")
 self.currentState = "intermission"
 self.intermissionCounter = 0
  
- self.currentState = love.math.random(#self.states)
+ self.currentState = 6--love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
  self:ShowTitle(self.states[self.currentState].name)
 end
