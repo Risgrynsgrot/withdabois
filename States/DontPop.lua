@@ -64,7 +64,7 @@ state.Draw = function(self)
 end
 
 state.OnLeave = function(self)
-  for k, p in ipairs(PlayerManager:GetPlayers) do
+  for k, p in ipairs(PlayerManager:GetPlayers()) do
   	p.scale = 1
   end
 end
