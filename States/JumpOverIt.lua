@@ -3,8 +3,9 @@ state.name = "Jump over it!"
 state.vy = {}
 state.vx = {}
 state.alive = {}
-state.g = 1
+state.g = 1.25
 state.x = width * 4
+state.wh = 128
 
 state.OnEnter = function(self)
   local slice = width / #PlayerManager:GetPlayers() * 0.75
@@ -72,7 +73,7 @@ state.Update = function(self, dt)
       p.r = p.r + 0.10 * sign
     end
     
-    if p.x + p.wh / 2 > self.x and p.x - p.wh / 2 < self.x + 64 and p.y >= height - 32 then
+    if p.x + p.wh / 2 > self.x and p.x - p.wh / 2 < self.x + self.wh and p.y >= height - self.wh + 32 then
       self.vy[i] = -30
       self.vx[i] = love.math.random(-10, 10)
       self.alive[i] = false
@@ -82,15 +83,13 @@ state.Update = function(self, dt)
 
   return self.x < -width * 2
 end
-  fuck = true
 
 state.Draw = function(self)
 
-  fuck = true
   love.graphics.push()
   love.graphics.scale(0.75, 0.75)
   love.graphics.rectangle("fill", 0, height + 32, width*2, 500)
-  love.graphics.rectangle("fill", self.x, height -32, 64, 64)
+  love.graphics.rectangle("fill", self.x, height - self.wh + 32 , self.wh , self.wh )
   PlayerManager:Draw()
   love.graphics.pop()
 
