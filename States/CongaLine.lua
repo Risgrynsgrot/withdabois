@@ -37,8 +37,8 @@ end
 
 
 state.Update = function(self, dt)
-  self.timer = self.timer + dt
-  if  self.timer < 20 then
+  self.timer = self.timer - dt
+  if  self.timer > 0 then
     
     for k,v in ipairs(PlayerManager.alivePlayers) do
       v.moved = false
@@ -159,11 +159,12 @@ state.Update = function(self, dt)
       
     end
   
-else
+  else
   
     if self.longestHead.id == 0 then
+      longestHead.id = PlayerManager.alivePlayers[0].id
       for k,v in ipairs(PlayerManager.alivePlayers) do
-        if v.back == 0 then
+        if v.back ~= 0 then
           
           local congaLength = 1
           local currentPlayer = k
@@ -179,18 +180,28 @@ else
           end         
         end
       end
-      
+
       local currentPlayer = self.longestHead.id
-      PlayerManager.alivePlayers[currentPlayer]:Jump()
+      PlayerManager.alivePlayers[currentPlayer]:AddScore()
       while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
         currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
+        PlayerManager.alivePlayers[currentPlayer]:AddScore()
+      end
+    end
+
+    local currentPlayer = self.longestHead.id
+    if  RandomFloat(0,1) > 0.5 then
+      PlayerManager.alivePlayers[currentPlayer]:Jump()
+    end
+    while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
+      currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
+      if  RandomFloat(0,1) > 0.5 then
         PlayerManager.alivePlayers[currentPlayer]:Jump()
       end
-      
     end
   
   
-  if  self.endTimer > 1 then
+  if  self.endTimer > 2 then
     return true
   end
 
@@ -275,12 +286,14 @@ state.OnEnter = function(self)
     
   end
   
-  state.timer = 0
+  state.timer = 20
   self.endTimer = 0
   self.longestHead = {
     id = 0,
     length = 0
   }
+  state.losers = {}
+  state.winners = {}
 end
 
 state.OnLeave = function(self)

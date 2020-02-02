@@ -14,6 +14,7 @@ end
 
 pm.JoinGame = function(self, id)
     table.insert(self.players, self.allPlayers[id])
+    table.insert(self.alivePlayers, self.allPlayers[id])
 end
 
 pm.GetPlayers = function(self)
@@ -35,7 +36,7 @@ pm.Update = function(self, dt)
 end
 
 pm.Draw = function(self)
-  for k,v in ipairs(self.players) do
+  for k,v in ipairs(self.alivePlayers) do
     v:Draw()
   end
 end

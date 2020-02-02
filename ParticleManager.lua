@@ -132,6 +132,7 @@ ParticleManager.Draw = function(self)
     love.graphics.circle("fill", particle.pos.x, particle.pos.y, size, particle.shape)
     love.graphics.pop()
   end
+  love.graphics.setColor(1, 1, 1, 1)
 end
 
 return ParticleManager

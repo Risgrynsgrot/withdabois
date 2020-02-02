@@ -26,6 +26,8 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
+ table.insert(self.states, require("States/DontPop"))
+
  table.insert(self.states, require("States/Lobby"))
  table.insert(self.states, require("States/ScoreBoard"))
  
