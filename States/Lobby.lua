@@ -11,6 +11,7 @@ state.OnEnter = function(self)
         p.x = width / 8 + (p.controllerId - 1) * width / 4
         p.y = height / 3 + (p.colorIndex - 1) * height / 8
         p.holdTimer = 0
+        p.pressTimer = 0
     end
     
 end
