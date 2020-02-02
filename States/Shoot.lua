@@ -47,7 +47,7 @@ state.Update = function(self, dt)
     end
 
     for k,p in ipairs(PlayerManager:GetPlayers()) do
-        if p:GetPressed() and isDead[k] == false then
+        if p:GetPressed() and isDead[k] == false and isDead[targets[k]] == false then
             self.AddSmoke(p.x, p.y)
             local playerTarget = PlayerManager:GetPlayers()[targets[k]]
             isDead[targets[k]] = true
