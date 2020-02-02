@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Hot potato!"
 local players = {}
 
 local playerRadius = 200
@@ -15,7 +15,7 @@ local bombTick = 0
 local Explode = function()
 	for k,p in ipairs(PlayerManager:GetPlayers()) do
 		if bombIndex ~= k then
-			p.score = p.score + 1
+			p:AddScore()
 		else
 			PlayerManager:EliminatePlayer(p)
 		end
@@ -97,7 +97,7 @@ state.Draw = function(self)
   		local text = "BOOM"
   		local w = font:getWidth(text)
   		local h = font:getHeight(text)
-  		love.graphics.print(text, 1280/2, 720/2, textRot, textScale, textScale, w/2, h/2, 0, 0)
+  		love.graphics.print(text, width/2, height/2, textRot, textScale, textScale, w/2, h/2, 0, 0)
   	end
 
 end

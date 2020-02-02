@@ -1,12 +1,13 @@
 local state = {}
+state.name = "Lobby!"
 
-local xOffset = 32
-local yOffset = 32
+local xOffset = 64
+local yOffset = 128
 
 state.OnEnter = function(self)
     for k, p in ipairs(PlayerManager:GetAllPlayers()) do
-        p.x = xOffset + p.controllerId * width / 4
-        p.y = yOffset + p.colorIndex * height / 5
+        p.x = width / 8 + (p.controllerId - 1) * width / 4
+        p.y = height / 3 + (p.colorIndex - 1) * height / 8
     end
 end
 
@@ -16,7 +17,7 @@ state.Update = function(self, dt)
             PlayerManager:JoinGame(k)
         end
     end
-    return false
+    return love.keyboard.isDown("space")
 end
 
 state.Draw = function(self)
@@ -24,7 +25,8 @@ state.Draw = function(self)
     local text = "Press a button to join!"
     local w = font:getWidth(text)
     local h = font:getHeight(text)
-    love.graphics.print(text, 1280/2, 720/2, textRot, textScale, textScale, w/2, h/2, 0, 0)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print(text, width/2, height/5, textRot, textScale, textScale, w/2, h/2, 0, 0)
 end
 
 state.OnLeave = function(self)

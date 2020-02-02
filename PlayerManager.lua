@@ -26,9 +26,11 @@ end
 
 pm.Update = function(self, dt)
   for k,v in ipairs(self.players) do
-    v:UpdateInput()
     v:UpdateJump(dt)
     v:UpdateEyes(dt)
+  end
+  for k, v in ipairs(self.allPlayers) do
+      v:UpdateInput()
   end
 end
 

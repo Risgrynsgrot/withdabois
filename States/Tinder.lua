@@ -1,5 +1,5 @@
 local state = {}
-
+state.name = "Tinder!"
 local unpairedPlayers = { }
 local pairedPlayers = { }
 
@@ -31,7 +31,6 @@ local DrawPlayerWithArrow = function(self, x, y)
 		self.y = y
 
 		self:Draw()
-		love.graphics.line(self.x, self.y, self.x + math.cos(self.r) * self.wh  *2, self.y + math.sin(self.r) * self.wh * 2)
 
 		self.x = oldX
 		self.y = oldY
@@ -59,6 +58,20 @@ end
 
 state.OnEnter = function(self)
 
+	 unpairedPlayers = { }
+	 pairedPlayers = { }
+	
+	 playerState = {
+		dirSelect = 1,
+		walking = 2,
+		matched = 3
+	}
+	
+	 winCondition = false
+	 winTimer = 20
+	
+	 timer = 2
+	
 	x = 0
 	y = 0
   	for k, p in ipairs(PlayerManager.alivePlayers) do
@@ -137,6 +150,8 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
+	love.graphics.setColor(1,1,1,1)
+  	love.graphics.print(string.sub(winTimer, 0, 3),10,10)
 
 	for i = 1, #pairedPlayers, 2 do
 
@@ -172,12 +187,12 @@ state.Draw = function(self)
 		DrawPlayerWithArrow(p, p.x, p.y)
 	end
 
-	love.graphics.setColor(1, 1, 1, 1)
-  	love.graphics.print("Time: " .. winTimer,8, 8, 0, 0.5, 0.5, 0, 0, 0, 0)
-
 	if winCondition == true then
 		love.graphics.setColor(1, 1, 1, 1)
-  		love.graphics.print("Time's up!",width/2 - 128, height/2, 0, 0.5, 0.5, 0, 0, 0, 0)
+  		local text = "Time's up!"
+  		local w = font:getWidth(text)
+  		local h = font:getHeight(text)
+  		love.graphics.print(text, width/2, height/2, 0, 1, 1, w/2, h/2, 0, 0)
   	end
 
 end
@@ -185,6 +200,7 @@ end
 state.OnLeave = function(self)
     	for k, p in pairs(PlayerManager:GetPlayers()) do
     		p.state = nil
+    		p.r = 0
 	end
 end
 

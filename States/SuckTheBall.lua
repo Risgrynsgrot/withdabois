@@ -1,4 +1,5 @@
 local state = { }
+state.name = "Suck the ball!"
 state.timer = 2
 local Dot = function(firstVector, secondVector)
   return  firstVector.x * secondVector.x + firstVector.y * secondVector.y
@@ -27,7 +28,7 @@ local winColor = {
 local playFieldRadius = 300
 
 
-state.OnEnter = function()
+state.OnEnter = function(self)
 
 	for k, p in ipairs(PlayerManager.alivePlayers) do
 		local val = (k/#PlayerManager:GetPlayers())*2*3.14 
@@ -36,10 +37,16 @@ state.OnEnter = function()
 	  	p.y = height / 2 + math.sin(val) * playFieldRadius
 	  	p.r = 0
 	end
+  
+  self.winner = nil
 end
 
 
 state.Update = function(self, dt)
+
+  if self.winner ~= nil then
+    self.winner:Jump()
+  end
 
 	if winCondition == true then
     self.timer = self.timer - dt
@@ -90,7 +97,7 @@ state.Update = function(self, dt)
 
 		if distance <= p.wh + ball.radius then
 		    winCondition = true
-
+        self.winner = p
 		    winColor.r = p.color.r
 		    winColor.g = p.color.g
 		    winColor.b = p.color.b
@@ -104,7 +111,7 @@ state.Update = function(self, dt)
   return false
 end
 
-state.Draw = function()
+state.Draw = function(self)
 	love.graphics.setColor(1, 1, 1, 1)
  	love.graphics.circle("line", width / 2, height / 2, playFieldRadius, 64)
 	for k, v in pairs(PlayerManager:GetPlayers()) do
@@ -116,12 +123,16 @@ state.Draw = function()
 
 	if winCondition == true then
 		love.graphics.setColor(winColor.r, winColor.g, winColor.b, 1)
-  		love.graphics.print("Winner winner chicken the dinner!",width/2 - 196, height/2, 0, 2, 2, 0, 0, 0, 0)
+  		local text = "Winner winner chicken the dinner!"
+  		local w = font:getWidth(text)
+  		local h = font:getHeight(text)
+  		love.graphics.print(text, width/2, height/2, 0, 0.5, 0.5, w/2, h/2, 0, 0)
+  		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 end
 
-state.OnLeave = function()
+state.OnLeave = function(self)
   
 end
 
