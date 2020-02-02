@@ -21,6 +21,7 @@ local createWall = function(diff)
 end
 
 state.OnEnter = function(self)
+	wallTimer = 100
 	hasFinished = false
 	finishTimer = 0
   	diff = 0
