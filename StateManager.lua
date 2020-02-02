@@ -76,9 +76,10 @@ stateManager.Update = function(self, dt)
         self.currentState = 16 -- WinScreen
       elseif self.intermissionCounter < 5 then
         local old = self.currentState
-        repeat
-          self.currentState = love.math.random(#self.states - 3)
-        until self.currentState ~= old
+        self.currentState = 2
+        --repeat
+        --  self.currentState = love.math.random(#self.states - 3)
+        --until self.currentState ~= old
         self.intermissionCounter = self.intermissionCounter + 1
         currentPitch = currentPitch + 1/24
         music:setPitch(currentPitch)
