@@ -28,7 +28,7 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/Push"))
  table.insert(self.states, require("States/Lobby"))
  table.insert(self.states, require("States/ScoreBoard")) --15
- 
+ table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 1
 
@@ -45,21 +45,24 @@ stateManager.Update = function(self, dt)
   else
     PlayerManager:Update(dt)
     if (self.states[self.currentState]:Update(dt)) then
-      
+
       self.states[self.currentState]:OnLeave() 
       for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:ResetVisuals()
       end
 
       PlayerManager:ResetRound()
-      local old = self.currentState
+     
 
-      if self.intermissionCounter < 5 then
+      if gameover then 
+        self.currentState = 16 -- WinScreen
+      else if self.intermissionCounter < 5 then
+        local old = self.currentState
         repeat
-          self.currentState = love.math.random(#self.states - 2)
+          self.currentState = love.math.random(#self.states - 3)
           --self.currentState = 10
           --self.currentState = self.currentState + 1
-          if self.currentState >= #self.states - 2 then
+          if self.currentState >= #self.states - 3 then
               self.currentState = 1
           end
         until self.currentState ~= old      
