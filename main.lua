@@ -27,6 +27,16 @@ function love.update(dt)
 end
 
 function love.draw()
+
+if love.window.getFullscreen() == true then
+  local sw, sh = love.window.getDesktopDimensions()
+  love.graphics.scale(sw / width, sh / height)
   sm:Draw()
   ParticleManager:Draw(dt)
+  love.graphics.scale(1, 1)
+  else 
+  sm:Draw()
+  ParticleManager:Draw(dt)
+  end
+  
 end
