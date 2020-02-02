@@ -14,6 +14,8 @@ local winTimer = 20
 
 local timer = 2
 
+local newParticle = CreateParticleStruct()
+
 local tablefind = function(tab,el)
 	for index, value in pairs(tab) do
 	     if value == el then
@@ -126,11 +128,34 @@ state.Update = function(self, dt)
   		        p.state = playerState.matched
   		        other.state = playerState.matched
 
+  		        p:AddScore()
+  		        other:AddScore()
+
   		        table.remove(unpairedPlayers, tablefind(unpairedPlayers, other))
   		        table.remove(unpairedPlayers, tablefind(unpairedPlayers, p))
 
   		        table.insert(pairedPlayers, other)
 				table.insert(pairedPlayers, p)
+
+
+			    newParticle.minSpeed = 100
+  			    newParticle.maxSpeed = 600
+			    
+    		    newParticle.shape = 7
+    		    newParticle.startSize = 14
+    		    newParticle.endSize = 0
+    		    newParticle.lifetime = 0.7
+    		    
+    		    newParticle.angle = 0
+    		    newParticle.spread = 3.141592653589793238462643383279 * 2.0
+			    newParticle.gravity.y = 0
+    
+      			    newParticle.color.r = 1
+      			    newParticle.color.g = 0
+      			    newParticle.color.b = 1
+      			    newParticle.color.a = 0.6
+    
+			    ParticleManager:SpawnParticle(newParticle, 64, {x=(p.x + other.x) / 2, y=(p.y + other.y) / 2})
 
 				goto continue
   		    end
@@ -144,7 +169,7 @@ state.Update = function(self, dt)
   	end
 
 	winTimer = winTimer - dt
-  	winCondition = (winTimer <= 0)
+  	winCondition = (#unpairedPlayers <= 2) or (tinTimer <= 0)
 
   return false
 end
@@ -164,15 +189,23 @@ state.Draw = function(self)
     	love.graphics.push()
 			love.graphics.setColor(1, 0, 1, 1)
 	
-				love.graphics.circle("fill", px, py, p.wh, 4)
+				love.graphics.circle("fill", px, py, 64, 4)
 				angle = -3.14159265358 / 4
 	
-				radius = p.wh * 0.5* math.sqrt(2)
+				radius = 64 * 0.5* math.sqrt(2)
 	    	  	love.graphics.circle("fill", px + math.cos(angle) * radius, py + math.sin(angle)* radius, radius, 20)
 	
 				angle = 3.14159265358 / 4 + 3.14159265358
 	    	  	love.graphics.circle("fill", px + math.cos(angle) * radius, py + math.sin(angle)* radius, radius, 20)
 		love.graphics.pop()
+
+		p.r = 0
+		p2.r = 0
+
+		p:Draw()
+		p2:Draw()
+
+
 	end
 
   	for k, p in pairs(unpairedPlayers) do

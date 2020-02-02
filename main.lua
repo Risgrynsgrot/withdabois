@@ -13,8 +13,6 @@ function love.load()
   joystick = love.joystick.getJoysticks()[1]
   PlayerManager:Init()
   sm:Init()
-  
-
 end
 
 function love.update(dt)
