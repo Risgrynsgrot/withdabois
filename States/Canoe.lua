@@ -9,26 +9,33 @@ state.canoeHeight = height*0.1
 state.over = false
 state.overTime = 3
 state.winnerIndex = 0
+state.colorIndexes = {}
 
 state.OnEnter = function(self)
   	self.canoes = {}
+  	self.colorIndexes = {}
   	self.over = false
   	self.overTime = 3
   	self.winnerIndex = 0
   	for k, p in ipairs(PlayerManager.alivePlayers) do
   		if self.canoes[p.colorIndex] == nil then
+  			table.insert(self.colorIndexes, p.colorIndex)
   			self.canoes[p.colorIndex] = {}
+  			self.canoes[p.colorIndex].color = p.colorIndex
   			self.canoes[p.colorIndex].speed = 0
   			self.canoes[p.colorIndex].force = 0
   			self.canoes[p.colorIndex].pos = 0
   			self.canoes[p.colorIndex].strokeTimer = 0 -- if stroke in progress
   			self.canoes[p.colorIndex].isStroking = false
   			self.canoes[p.colorIndex].players = {}
+  			print("added")
   		end
   		table.insert(self.canoes[p.colorIndex].players, p)
   		p.hasClicked = false
+
   	end
-  	for k, canoe in ipairs(self.canoes) do
+  	for k, v in ipairs(self.colorIndexes) do
+  		local canoe = self.canoes[self.colorIndexes[k]]
   		for i, p in ipairs(canoe.players) do
   			p.x = canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players
 			p.y = (k-0.5) * height/#self.canoes
@@ -63,7 +70,8 @@ end
 
 state.Update = function(self, dt)
 	if not self.over then 
-	  	for k, canoe in ipairs(self.canoes) do
+	  	for k, v in ipairs(self.colorIndexes) do
+  			local canoe = self.canoes[self.colorIndexes[k]]
 	  		canoe.speed = canoe.speed * 0.9
 	  		canoe.speed = canoe.speed + canoe.force
 	  		canoe.force = canoe.force * 0.9
@@ -121,7 +129,8 @@ state.Update = function(self, dt)
 end
 
 state.Draw = function(self)
-	for k, canoe in ipairs(self.canoes) do
+	for k, v in ipairs(self.colorIndexes) do
+		local canoe = self.canoes[self.colorIndexes[k]]
   		love.graphics.rectangle("fill", canoe.pos, (k-0.5) * height/#self.canoes, self.canoeWidth, self.canoeHeight)
   	end
   	PlayerManager:Draw()
