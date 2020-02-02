@@ -20,7 +20,6 @@ function love.load()
 end
 
 function love.update(dt)
-    music:setPitch(1 + (love.timer.getTime() - timeStamp) * 0.001)
   sm:Update(dt)
   ParticleManager:Update(dt)
 end

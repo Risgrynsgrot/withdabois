@@ -16,18 +16,18 @@ state.AddSmoke = function(x, y)
     newParticle.color.r = 0.7
     newParticle.color.g = 0.7
     newParticle.color.b = 0.7
-    newParticle.color.a = 1
+    newParticle.color.a = 0.4
 
 
     newParticle.shape = 5
-    newParticle.startSize = 400
-    newParticle.endSize = 2000
-    newParticle.lifetime = 5
+    newParticle.startSize = 100
+    newParticle.endSize = 500
+    newParticle.lifetime = 2
 
     newParticle.angle = 0
     newParticle.spread = 6.28
     newParticle.gravity.y = -1
-    newParticle.fadeSpeed = 0.06
+    newParticle.fadeSpeed = 0.006
 
     ParticleManager:SpawnParticle(newParticle,10,{x=x,y=y})
 end

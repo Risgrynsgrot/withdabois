@@ -1,3 +1,4 @@
+local currentPitch = 1
 local stateManager = {}
 
 stateManager.states = {}
@@ -57,12 +58,14 @@ stateManager.Update = function(self, dt)
       if self.intermissionCounter < 5 then
         repeat
           self.currentState = love.math.random(#self.states - 2)
-          --self.currentState = 10
+          --self.currentState = 4
           --self.currentState = self.currentState + 1
           if self.currentState >= #self.states - 2 then
               self.currentState = 1
           end
         until self.currentState ~= old      
+        currentPitch = currentPitch + 1/24
+        music:setPitch(currentPitch)
          self.intermissionCounter = self.intermissionCounter + 1
       else 
         self.currentState = #self.states --intermission is at last index
