@@ -117,7 +117,7 @@ state.Update = function(self, dt)
 			end
 	  	end
   	else
-  		for k, p in ipairs(self.canoes[self.winnerIndex].players) do
+  		for k, p in ipairs(self.canoes[self.colorIndexes[self.winnerIndex]].players) do
   			p:Jump()
   		end
   		self.overTime = self.overTime - dt

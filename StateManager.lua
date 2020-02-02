@@ -59,12 +59,13 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
+ --table.insert(self.states, require("States/DontPop"))
  table.insert(self.states, require("States/Lobby"))
  table.insert(self.states, require("States/ScoreBoard")) --15
  table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 2
-  self:Shuffle()
+self:Shuffle()
  self.intermissionCounter = 0
  self.oldState = 1
  
@@ -88,7 +89,7 @@ stateManager.Update = function(self, dt)
       PlayerManager:ResetRound()
       
       if gameover then 
-        self.currentState = 16 -- WinScreen
+        self.currentState = #self.states -- WinScreen
       elseif self.intermissionCounter < 5 then
         
         
@@ -104,7 +105,7 @@ stateManager.Update = function(self, dt)
         end
         
         self.intermissionCounter = self.intermissionCounter + 1
-        currentPitch = currentPitch + 1/24
+        currentPitch = currentPitch + 1 / 48
         music:setPitch(currentPitch)
       else -- player 2
         self.oldState = self.currentState + 1

@@ -110,7 +110,7 @@ function CreatePlayer(id, x, y)
     self.score = self.score + 1
     self.scoreTimer = 0
     --gameover = true
-    if self.score >= 20 then 
+    if self.score >= 7 then 
       gameover = true
     end
   end

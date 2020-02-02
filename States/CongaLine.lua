@@ -196,7 +196,7 @@ state.Update = function(self, dt)
       local currentPlayer = self.longestHead.id
       PlayerManager.alivePlayers[currentPlayer]:AddScore()
       table.insert(self.winners,PlayerManager.alivePlayers[currentPlayer])
-      while PlayerManager.alivePlayers[currentPlayer].back ~= 0 do
+      while PlayerManager.alivePlayers[currentPlayer].back ~= 0 and PlayerManager.alivePlayers[currentPlayer].back ~= k do
         currentPlayer = PlayerManager.alivePlayers[currentPlayer].back
         PlayerManager.alivePlayers[currentPlayer]:AddScore()
         table.insert(self.winners,PlayerManager.alivePlayers[currentPlayer])
