@@ -40,7 +40,7 @@ state.AddSplash = function(x, y)
   local newParticle = CreateParticleStruct()
   
   newParticle.minSpeed = 10
-  newParticle.maxSpeed = 50
+  newParticle.maxSpeed = 90
 
   newParticle.color.r = 0.2
   newParticle.color.g = 0.2
@@ -56,9 +56,9 @@ state.AddSplash = function(x, y)
   newParticle.angle = 0
   newParticle.spread = 6.28
   newParticle.gravity.y = 0
-  newParticle.fadeSpeed = 0.01
+  newParticle.fadeSpeed = 0.03
   
-  ParticleManager:SpawnParticle(newParticle,10,{x=bombPosition.x,y=bombPosition.y})
+  ParticleManager:SpawnParticle(newParticle,10,{x=x,y=y})
 end
 
 state.Update = function(self, dt)
@@ -85,9 +85,9 @@ state.Update = function(self, dt)
 	  						canoe.strokeTimer = self.strokeTime
 	  						p.hasClicked = true
 	  						p:Jump()
+	  						self.AddSplash(canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players, (k-0.5) * height/#self.canoes + self.canoeHeight)
 	  						if #canoe.players == 1 then
 	  							canoe.force = canoe.force + self.strokeForce * self.strokeTime * #canoe.players
-	  							self.AddSplash(canoe.pos + (i-0.5)*self.canoeWidth/#canoe.players, (k-0.5) * height/#self.canoes + self.canoeHeight)
 	  						end
 	  					end
 	  				else
