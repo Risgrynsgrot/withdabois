@@ -7,6 +7,31 @@ state.highestPlayer = {}
 state.popped = false
 state.winTimer = 0
 
+state.Pop = function(x, y, r, g, b)
+  local newParticle = CreateParticleStruct()
+  
+  newParticle.minSpeed = 10
+  newParticle.maxSpeed = 90
+
+  newParticle.color.r = r
+  newParticle.color.g = g
+  newParticle.color.b = b
+  newParticle.color.a = 1
+
+
+  newParticle.shape = 5
+  newParticle.startSize = 1
+  newParticle.endSize = 40
+  newParticle.lifetime = 1
+  
+  newParticle.angle = 0
+  newParticle.spread = 6.28
+  newParticle.gravity.y = 0
+  newParticle.fadeSpeed = 0.05
+  
+  ParticleManager:SpawnParticle(newParticle,8,{x=x,y=y})
+end
+
 state.OnEnter = function(self)
   self.maxScale = 4 + love.math.random(8)
   self.highestValue = 0
@@ -35,6 +60,7 @@ state.Update = function(self, dt)
 	  		p.scale = (1+(self.scale[k]+1)/6)
 	  	end
 	  	if self.scale[k] > self.maxScale then 
+        self.Pop(p.x, p.y, p.color.r, p.color.g, p.color.b)
 	  		PlayerManager:EliminatePlayer(p)
 	  		table.remove(self.scale, k)
 	  		self.popped = true
@@ -43,7 +69,7 @@ state.Update = function(self, dt)
 	  				self.highestValue = self.scale[i]
 	  				self.highestPlayer = o
 	  				print("set")
-				end  				
+				  end  				
 	  		end
 	  		self.highestPlayer:AddScore()
 	  	end
