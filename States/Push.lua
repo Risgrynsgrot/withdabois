@@ -9,6 +9,12 @@ local growthRate = 40.0
 
 local baseSpeed = 1000.0
 
+local newParticle = CreateParticleStruct()
+
+local winTimer = 2.0
+
+function lerp(a,b,t) return (1-t)*a + t*b end
+
 local GetAllPlayersAffected = function(player)
 	playersAffected = { }
 
@@ -29,7 +35,8 @@ local GetAllPlayersAffected = function(player)
 end
 
 state.OnEnter = function(self)
-  
+	winTimer = 2
+	
   	angle = 0
 	for k, p in ipairs(PlayerManager.players) do
 
@@ -50,8 +57,21 @@ end
 
 state.Update = function(self, dt)
   
+ 	growthRate = 40.0 * (20 / #PlayerManager.alivePlayers)
+
 	if #PlayerManager.alivePlayers <= 1 then
-	    return true
+
+		if winTimer == 2 then
+			for k, p in ipairs(PlayerManager.alivePlayers) do
+				p:AddScore()
+			end
+		end
+
+		winTimer = winTimer - dt
+
+		if winTimer <= 0 then
+	    	return true
+		end
 	end
 
 	for k, p in ipairs(PlayerManager.alivePlayers) do
@@ -74,14 +94,39 @@ state.Update = function(self, dt)
 
 		if p:GetDown() then
 			p.shockWaveCharge = p.shockWaveCharge + dt * growthRate
+			p.wh = lerp(p.wh, 20, 0.2)
+			p.x = p.x + love.math.random(-1, 1)
+			p.y = p.y + love.math.random(-1, 1)
+
 		end
 
 		if p:GetReleased() then
+
+			newParticle.minSpeed = p.shockWaveCharge * 2.0
+  			newParticle.maxSpeed = p.shockWaveCharge * 3.0
 			
+    		newParticle.shape = 7
+    		newParticle.startSize = 10
+    		newParticle.endSize = 0
+    		newParticle.lifetime = 2
+    		
+    		newParticle.angle = 0
+    		newParticle.spread = 6.28
+			newParticle.gravity.y = 0
+
+  			newParticle.color.r = p.color.r
+  			newParticle.color.g = p.color.g
+  			newParticle.color.b = p.color.b
+  			newParticle.color.a = 0.6
+
+			ParticleManager:SpawnParticle(newParticle, p.shockWaveCharge * 0.8, {x=p.x,y=p.y})
+
 			GetAllPlayersAffected(p)
 			p.shockWaveCharge = 0
-
 		end
+
+			p.wh = lerp(p.wh, 32, 0.15)
+
 
 		::continue::
 	end
@@ -94,18 +139,20 @@ state.Draw = function(self)
     love.graphics.circle("fill", width / 2, height / 2, playFieldRadius, 69)
    
     for k, p in ipairs(PlayerManager.alivePlayers) do
-    	p:Draw()
-	end
-
-    for k, p in ipairs(PlayerManager.alivePlayers) do
 	    	if p.shockWaveCharge ~= 0 then
-    		love.graphics.setColor(1.0, 1.0, 1.0, 0.6)
-    		love.graphics.circle("fill", p.x, p.y, p.shockWaveCharge, 16)
+
+    		love.graphics.setColor(1.0, 1.0, 1.0, 0.4)
+    		love.graphics.circle("fill", p.x, p.y, p.shockWaveCharge, 32)
 
     		love.graphics.setColor(0.0, 0.0, 0.0, 1.0)
-    		love.graphics.circle("line", p.x, p.y, p.shockWaveCharge, 16)
+    		love.graphics.circle("line", p.x, p.y, p.shockWaveCharge, 32)
+
     	end	
     end
+
+    for k, p in ipairs(PlayerManager.alivePlayers) do
+    	p:Draw()
+	end
 end
 
 state.OnLeave = function(self)
