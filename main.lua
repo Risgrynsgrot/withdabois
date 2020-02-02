@@ -6,9 +6,11 @@ font = love.graphics.newFont("soupofjustice.ttf", 120)
 height = 720
 width = 1280
 love.graphics.setLineWidth(5)
+gameover = false
 local timeStamp = love.timer.getTime()
 
 function love.load()
+	gameover = false
     music = love.audio.newSource('mainSong.wav', 'static')
     music:setLooping(true)
     music:play()

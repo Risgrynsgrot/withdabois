@@ -12,6 +12,7 @@ local bombRadius = 30
 local bombSpeed = 10
 local bombHeight = 0
 local bombTick = 0
+local bombLanded = true
 local Explode = function()
 	for k,p in ipairs(PlayerManager:GetPlayers()) do
 		if bombIndex ~= k then
@@ -58,7 +59,7 @@ state.OnEnter = function()
 	bombPosition.x = width/2
 	bombPosition.y = height/2
 	bombIndex = love.math.random(#PlayerManager.alivePlayers)
-  	
+  bombLanded = true
 	for k,p in ipairs(PlayerManager.alivePlayers) do
 		local val = (k/#PlayerManager.alivePlayers)*2*3.14 
 	  	p.x = width / 2 + math.cos(val) * playerRadius
@@ -72,13 +73,20 @@ state.Update = function(self, dt)
   		for k,p in ipairs(PlayerManager.alivePlayers) do
   			if p:GetPressed() then
   				p:Jump()
-          while bombIndex == k do
-            bombIndex = love.math.random(#PlayerManager.alivePlayers)
-          end 
+          if bombLanded then
+            bombLanded = false
+            while bombIndex == k do
+              bombIndex = love.math.random(#PlayerManager.alivePlayers)
+            end 
+          end
   			end
   		end
   		local xDiff = (PlayerManager.alivePlayers[bombIndex].x - bombPosition.x) * bombSpeed
   		local yDiff = (PlayerManager.alivePlayers[bombIndex].y - bombPosition.y) * bombSpeed
+      if math.abs(xDiff) < 10 and math.abs(yDiff) < 10 then
+        bombLanded = true
+      end
+
    		bombPosition.x = bombPosition.x + xDiff * dt
    		bombPosition.y = bombPosition.y + yDiff * dt
    		bombTimer = bombTimer - dt
