@@ -19,7 +19,31 @@ state.OnEnter = function(self)
   self.x = width * 4
 end
 
+local ttt = 1
+
 state.Update = function(self, dt)
+  
+  local newParticle = CreateParticleStruct()
+  
+  newParticle.minSpeed = 1
+  newParticle.maxSpeed = 100
+
+  newParticle.color.r = 1
+  newParticle.color.g = 1
+  newParticle.color.b = 1
+  newParticle.color.a = 1
+
+  newParticle.shape = 5
+  newParticle.startSize = 10
+  newParticle.endSize = 30
+  newParticle.lifetime = 0.3
+  newParticle.fadeSpeed = 0.07
+  
+  newParticle.angle = -math.pi * 0.5
+  newParticle.spread = 0
+  
+  ParticleManager:SpawnParticle(newParticle, 3, {x=self.x * 0.75,y=height - 200 + 48})
+  
   if self.x > 0 and self.x - width * 0.8 * dt < 0 then
     for i,p in ipairs(PlayerManager:GetPlayers()) do
       if self.alive[i] then
@@ -58,8 +82,11 @@ state.Update = function(self, dt)
 
   return self.x < -width * 2
 end
+  fuck = true
 
 state.Draw = function(self)
+
+  fuck = true
   love.graphics.push()
   love.graphics.scale(0.75, 0.75)
   love.graphics.rectangle("fill", 0, height + 32, width*2, 500)
