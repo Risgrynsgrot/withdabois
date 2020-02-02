@@ -34,8 +34,6 @@ stateManager.Init = function(self)
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 1
 
---self.states["intermission"] = require("States/ScoreBoard")
---self.currentState = "intermission"
 self.intermissionCounter = 0
  
  --self.currentState = love.math.random(#self.states)
@@ -56,15 +54,15 @@ stateManager.Update = function(self, dt)
       end
 
       PlayerManager:ResetRound()
-      local old = 7 --self.currentState
-      
+      local old = self.currentState
+    
       if self.intermissionCounter < 5 then
         repeat
-          self.currentState = 1 --love.math.random(#self.states - 2)
+          self.currentState = love.math.random(#self.states - 2)
           --self.currentState = self.currentState + 1
-          --if self.currentState >= #self.states - 2 then
-          --    self.currentState = 1
-          --end
+          if self.currentState >= #self.states - 2 then
+              self.currentState = 1
+          end
         until self.currentState ~= old      
          self.intermissionCounter = self.intermissionCounter + 1
       else 
