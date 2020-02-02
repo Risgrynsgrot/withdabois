@@ -60,7 +60,7 @@ function CreatePlayer(id, x, y)
       local distance = math.sqrt(eye.x*eye.x + eye.y*eye.y)
       --if the ball hits the arena limit
       if distance >= eye.rad - eye.innerRad then
-        if distance >= eye.rad + eye.innerRad then
+        if distance >= eye.rad then
           eye.x = 0
           eye.y = 0
           eye.vx = 0
