@@ -1,5 +1,5 @@
 local state = {}
-state.name = "Match!"
+state.name = "Connect!"
 local unpairedPlayers = { }
 local pairedPlayers = { }
 
