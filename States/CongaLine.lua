@@ -37,8 +37,8 @@ end
 
 
 state.Update = function(self, dt)
-  self.timer = self.timer + dt
-  if  self.timer < 20 then
+  self.timer = self.timer - dt
+  if  self.timer > 20 then
     
     for k,v in ipairs(PlayerManager.alivePlayers) do
       v.moved = false
@@ -275,7 +275,7 @@ state.OnEnter = function(self)
     
   end
   
-  state.timer = 0
+  state.timer = 20
   self.endTimer = 0
   self.longestHead = {
     id = 0,

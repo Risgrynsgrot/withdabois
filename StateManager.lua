@@ -17,12 +17,12 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/HotPotato"))
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
- table.insert(self.states, require("States/SuckTheBall"))
+ table.insert(self.states, require("States/SuckTheBall")) --5
  table.insert(self.states, require("States/CountDown"))
  table.insert(self.states, require("States/Tinder"))
  table.insert(self.states, require("States/Run"))
  table.insert(self.states, require("States/Roulette"))
- table.insert(self.states, require("States/CongaLine"))
+ table.insert(self.states, require("States/CongaLine")) --10
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
@@ -32,6 +32,8 @@ self.currentState = "intermission"
 self.intermissionCounter = 0
  
  self.currentState = love.math.random(#self.states)
+  self.currentState = 10
+
  self.states[self.currentState]:OnEnter()
  self:ShowTitle(self.states[self.currentState].name)
 end
