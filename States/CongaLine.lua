@@ -4,6 +4,7 @@ state.name = "Conga line!"
 state.speed = 200
 state.turningSpeed = 1
 state.alignmentToConga = 0.5
+state.traiParticle = {}
 
 state.Collision = function(self, firstPlayer, firstForwardVector, secondPlayer)
   local diff = {}
@@ -49,6 +50,9 @@ state.Update = function(self, dt)
   if  self.timer > 0 then
     
     for k,v in ipairs(PlayerManager.alivePlayers) do
+      
+      
+      
       v.moved = false
       if v.front == 0 then
         local collided = false
@@ -296,6 +300,25 @@ state.OnEnter = function(self)
 
   local x = 0
 	local y = 0
+  
+  self.trailParticle = CreateParticleStruct()
+  
+  self.trailParticle.minSpeed = 0
+  self.trailParticle.maxSpeed = 20
+
+  --newParticle.color.a = 0.5
+
+
+  self.trailParticle.shape = 7
+  self.trailParticle.startSize = 12
+  self.trailParticle.endSize = 4
+  self.trailParticle.lifetime = 3
+  self.trailParticle.fadeSpeed = 0.3
+  
+  --newParticle.angle = 0
+  --newParticle.spread = 6.28
+  --newParticle.gravity.y = 200
+  
 
   for k,v in ipairs(PlayerManager.players) do
     v.wh = 24
