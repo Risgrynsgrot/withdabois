@@ -17,17 +17,17 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/HotPotato"))
  table.insert(self.states, require("States/FlapTheBird"))
  table.insert(self.states, require("States/Shoot"))
- table.insert(self.states, require("States/SuckTheBall"))
+ table.insert(self.states, require("States/SuckTheBall")) --5
  table.insert(self.states, require("States/CountDown"))
  table.insert(self.states, require("States/Tinder"))
  table.insert(self.states, require("States/Run"))
  table.insert(self.states, require("States/Roulette"))
- table.insert(self.states, require("States/CongaLine"))
+ table.insert(self.states, require("States/CongaLine")) --10
  table.insert(self.states, require("States/ZigZag"))
  table.insert(self.states, require("States/Canoe"))
  table.insert(self.states, require("States/Push"))
  table.insert(self.states, require("States/Lobby"))
- table.insert(self.states, require("States/ScoreBoard"))
+ table.insert(self.states, require("States/ScoreBoard")) --15
  
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 1
@@ -57,6 +57,7 @@ stateManager.Update = function(self, dt)
       if self.intermissionCounter < 5 then
         repeat
           self.currentState = love.math.random(#self.states - 2)
+          --self.currentState = 10
           --self.currentState = self.currentState + 1
           if self.currentState >= #self.states - 2 then
               self.currentState = 1
