@@ -50,9 +50,9 @@ state.Update = function(self, dt)
   		for k,p in ipairs(PlayerManager.alivePlayers) do
   			if p:GetPressed() then
   				p:Jump()
-  				if bombIndex == k then
-      				bombIndex = love.math.random(#PlayerManager.alivePlayers)
-    			end
+          while bombIndex == k do
+            bombIndex = love.math.random(#PlayerManager.alivePlayers)
+          end 
   			end
   		end
   		local xDiff = (PlayerManager.alivePlayers[bombIndex].x - bombPosition.x) * bombSpeed
