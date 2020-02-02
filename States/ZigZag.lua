@@ -69,41 +69,46 @@ end
 
 state.Update = function(self, dt)
 	timer = timer + dt
-	local diff = timer * 0.1 + 1
-  diff = diff 
-	wallTimer = wallTimer + dt * diff
-	if wallTimer > wallTime then
-		wallTimer = 0
-		table.insert(walls, createWall(math.max(width / diff,50),diff))
-	end
-
-	for k,wall in ipairs(walls) do
-		wall.y = wall.y + dt * diff * wallSpeed
-	end
-
- 	for k,p in ipairs(PlayerManager.alivePlayers) do
-		if p:GetPressed() then
-			p.dir = -p.dir
-		end
-		p.x = p.x + p.dir * playerSpeed * dt * math.pow(diff,1.01)
-		if p.x - p.wh*2 > width  or p.x + p.wh < 0 then
-			PlayerManager:EliminatePlayer(p)
-		end
-
-		for j,wall in ipairs(walls) do
-      if wall:Collision(p) then
-				PlayerManager:EliminatePlayer(p)
-			end
-		end
-	end	
-
-	if #PlayerManager.alivePlayers < 2 then
-	 	for k,p in ipairs(PlayerManager.alivePlayers) do
-			p:AddScore()
-		end	
-		return true
-	end
-  	return false
+  
+	if #PlayerManager.alivePlayers > 1 then
+    local diff = timer * 0.1 + 1
+    diff = diff 
+    wallTimer = wallTimer + dt * diff
+    if wallTimer > wallTime then
+      wallTimer = 0
+      table.insert(walls, createWall(math.max(width / diff,50),diff))
+    end
+  
+    for k,wall in ipairs(walls) do
+      wall.y = wall.y + dt * diff * wallSpeed
+    end
+  
+    for k,p in ipairs(PlayerManager.alivePlayers) do
+      if p:GetPressed() then
+        p.dir = -p.dir
+      end
+      p.x = p.x + p.dir * playerSpeed * dt * math.pow(diff,1.01)
+      if p.x - p.wh*2 > width  or p.x + p.wh < 0 then
+        PlayerManager:EliminatePlayer(p)
+      end
+  
+      for j,wall in ipairs(walls) do
+        if wall:Collision(p) then
+          PlayerManager:EliminatePlayer(p)
+        end
+      end
+    end
+    if #PlayerManager.alivePlayers < 2 then
+      for k,p in ipairs(PlayerManager.alivePlayers) do
+        p:AddScore()
+        p:Jump()
+        timer = 0
+      end
+    end
+  elseif timer > 2 then
+    return true
+  end
+  return false
 end
 
 state.Draw = function(self)
