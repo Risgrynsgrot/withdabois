@@ -30,9 +30,9 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/ScoreBoard")) --15
  table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
- self.currentState = #self.states - 1
+ self.currentState = #self.states - 2
 
-self.intermissionCounter = 0
+ self.intermissionCounter = 0
  
  --self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
@@ -56,19 +56,24 @@ stateManager.Update = function(self, dt)
 
       if gameover then 
         self.currentState = 16 -- WinScreen
-      else if self.intermissionCounter < 5 then
+      elseif self.intermissionCounter < 5 then
         local old = self.currentState
         repeat
           self.currentState = love.math.random(#self.states - 3)
           --self.currentState = 10
           --self.currentState = self.currentState + 1
           if self.currentState >= #self.states - 3 then
-              self.currentState = 1
+            self.currentState = 1
           end
         until self.currentState ~= old      
-         self.intermissionCounter = self.intermissionCounter + 1
-      else 
-        self.currentState = #self.states --intermission is at last index
+        self.intermissionCounter = self.intermissionCounter + 1
+      else -- player 2
+        self.scoreTable[2].x = width/2
+        self.scoreTable[2].y = height/2
+        self.scoreTable[2]:Draw()
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.rectangle("fill", width/2-32-64, height/2-64*2, 64, height)
+        self.currentState = #self.states - 1 --intermission is at last index
         self.intermissionCounter = 0
       end
 

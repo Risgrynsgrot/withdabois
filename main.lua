@@ -10,6 +10,7 @@ gameover = false
 local timeStamp = love.timer.getTime()
 
 function love.load()
+	gameover = false
     music = love.audio.newSource('mainSong.wav', 'static')
     music:setLooping(true)
     music:play()
