@@ -30,6 +30,21 @@ stateManager.ShowTitle = function(self, text)
   print(text)
 end
 
+stateManager.Shuffle = function(self)
+  
+  for i = 1, #self.states - 3 do
+    local ri = love.math.random(1, #self.states - 3)
+    local temp = self.states[i]
+    self.states[i] = self.states[ri]
+    self.states[ri] = temp
+  end
+  
+  for i = 1, #self.states - 3 do
+    print(self.states[i].name)
+  end
+  
+end
+
 stateManager.Init = function(self)
  table.insert(self.states, require("States/JumpOverIt"))
  table.insert(self.states, require("States/HotPotato"))
@@ -49,8 +64,9 @@ stateManager.Init = function(self)
  table.insert(self.states, require("States/WinScreen"))
  --self.currentState = love.math.random(#self.states)
  self.currentState = #self.states - 2
-
+  self:Shuffle()
  self.intermissionCounter = 0
+ self.oldState = 1
  
  --self.currentState = love.math.random(#self.states)
  self.states[self.currentState]:OnEnter()
@@ -63,30 +79,41 @@ stateManager.Update = function(self, dt)
   else
     PlayerManager:Update(dt)
     if (self.states[self.currentState]:Update(dt)) then
-
       self.states[self.currentState]:OnLeave() 
       for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:ResetVisuals()
       end
+      
 
       PlayerManager:ResetRound()
-     
-
+      
       if gameover then 
         self.currentState = 16 -- WinScreen
       elseif self.intermissionCounter < 5 then
-        local old = self.currentState
-        repeat
-          self.currentState = love.math.random(#self.states - 3)
-        until self.currentState ~= old
+        
+        
+        if self.intermissionCounter == 0 then
+          self.currentState  = self.oldState
+        else
+          self.currentState = self.currentState + 1
+        end
+        
+        if self.currentState >= (#self.states - 2) then
+          self.currentState = 1
+          self:Shuffle()
+        end
+        
         self.intermissionCounter = self.intermissionCounter + 1
         currentPitch = currentPitch + 1/24
         music:setPitch(currentPitch)
       else -- player 2
+        self.oldState = self.currentState + 1
         self.currentState = #self.states - 1 --intermission is at last index
         self.intermissionCounter = 0
       end
       
+      
+      print( self.currentState)
       r,g,b= HSV(love.math.random(255),128,128)
       love.graphics.setBackgroundColor(r/255,g/255,b/255)
 
