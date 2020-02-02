@@ -1,5 +1,5 @@
 local state = { }
-state.name = "Suck the ball!"
+state.name = "Vacuum the Ball!"
 state.timer = 2
 local Dot = function(firstVector, secondVector)
   return  firstVector.x * secondVector.x + firstVector.y * secondVector.y
@@ -36,7 +36,7 @@ local newParticle = CreateParticleStruct()
 state.OnEnter = function(self)
 
 
-	ball = {
+	ball = {  
 
 	x = width / 2,
 	y = height / 2,
