@@ -162,6 +162,7 @@ state.Update = function(self, dt)
   else
   
     if self.longestHead.id == 0 then
+      longestHead.id = PlayerManager.alivePlayers[0].id
       for k,v in ipairs(PlayerManager.alivePlayers) do
         if v.back ~= 0 then
           
