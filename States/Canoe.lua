@@ -16,16 +16,16 @@ state.OnEnter = function(self)
   	self.overTime = 3
   	self.winnerIndex = 0
   	for k, p in ipairs(PlayerManager.alivePlayers) do
-  		if self.canoes[p.controllerId] == nil then
-  			self.canoes[p.controllerId] = {}
-  			self.canoes[p.controllerId].speed = 0
-  			self.canoes[p.controllerId].force = 0
-  			self.canoes[p.controllerId].pos = 0
-  			self.canoes[p.controllerId].strokeTimer = 0 -- if stroke in progress
-  			self.canoes[p.controllerId].isStroking = false
-  			self.canoes[p.controllerId].players = {}
+  		if self.canoes[p.colorIndex] == nil then
+  			self.canoes[p.colorIndex] = {}
+  			self.canoes[p.colorIndex].speed = 0
+  			self.canoes[p.colorIndex].force = 0
+  			self.canoes[p.colorIndex].pos = 0
+  			self.canoes[p.colorIndex].strokeTimer = 0 -- if stroke in progress
+  			self.canoes[p.colorIndex].isStroking = false
+  			self.canoes[p.colorIndex].players = {}
   		end
-  		table.insert(self.canoes[p.controllerId].players, p)
+  		table.insert(self.canoes[p.colorIndex].players, p)
   		p.hasClicked = false
   	end
   	for k, canoe in ipairs(self.canoes) do
@@ -49,8 +49,8 @@ state.AddSplash = function(x, y)
 
 
   newParticle.shape = 5
-  newParticle.startSize = 4
-  newParticle.endSize = 40
+  newParticle.startSize = 3
+  newParticle.endSize = 30
   newParticle.lifetime = 1
   
   newParticle.angle = 0

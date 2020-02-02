@@ -14,7 +14,9 @@ local ball = {
 	vy = 0,
 
 	radius = 64,
-	angle = 0
+	angle = 0,
+
+	color = { }
 }
 
 local winCondition = false
@@ -27,6 +29,8 @@ local winColor = {
 
 local playFieldRadius = 300
 local givenPoint = false
+
+local newParticle = CreateParticleStruct()
 
 
 state.OnEnter = function(self)
@@ -41,8 +45,16 @@ state.OnEnter = function(self)
 	vy = 0,
 
 	radius = 64,
-	angle = 0
+	angle = 0,
+
+	color = { }
+
 }
+
+ball.color.r = 1
+ball.color.g = 1
+ball.color.b = 1
+
 	playFieldRadius = 300
 	winCondition = false
 	state.timer = 2
@@ -84,10 +96,33 @@ state.Update = function(self, dt)
 		if p:GetPressed() then
 			angle = -math.atan2 ( ball.y - p.y, p.x - ball.x) 
 
+			p:Jump()
+
 			ball.angle = angle
 
 			ball.vx = ball.vx + math.cos(angle) 
 			ball.vy = ball.vy + math.sin(angle) 
+
+			ball.color = p.color
+
+			newParticle.minSpeed = 100
+  			newParticle.maxSpeed = 600
+			
+    		newParticle.shape = 7
+    		newParticle.startSize = 14
+    		newParticle.endSize = 0
+    		newParticle.lifetime = 0.7
+    		
+    		newParticle.angle = angle
+    		newParticle.spread = 0.05
+			newParticle.gravity.y = 0
+
+  			newParticle.color.r = p.color.r
+  			newParticle.color.g = p.color.g
+  			newParticle.color.b = p.color.b
+  			newParticle.color.a = 0.6
+
+			ParticleManager:SpawnParticle(newParticle, 8, {x=ball.x,y=ball.y})
 		end
 
 		distance = math.sqrt(math.pow(ball.x - p.x, 2) + math.pow(ball.y - p.y, 2))
@@ -140,7 +175,7 @@ state.Draw = function(self)
 		v:Draw()
 	end
 
-	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.setColor(ball.color.r, ball.color.g, ball.color.b, 1)
 	love.graphics.circle("fill", ball.x, ball.y, ball.radius, 32)
 
 

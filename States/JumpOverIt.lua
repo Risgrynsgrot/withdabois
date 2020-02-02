@@ -20,6 +20,13 @@ state.OnEnter = function(self)
 end
 
 state.Update = function(self, dt)
+  if self.x > 0 and self.x - width * 0.8 * dt < 0 then
+    for i,p in ipairs(PlayerManager:GetPlayers()) do
+      if self.alive[i] then
+        p:AddScore()
+      end
+    end
+  end
   self.x = self.x - width * 0.8 * dt
   
   for i,p in ipairs(PlayerManager:GetPlayers()) do
