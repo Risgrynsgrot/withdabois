@@ -1,5 +1,4 @@
 
-Linjerna i shoot är ibland olika breda
 Conga line räknar upp, känns konstigt
 AddScore görs inte i alla spel
 HotPotato tar inte bort den som sprängs

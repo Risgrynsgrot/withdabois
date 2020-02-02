@@ -20,7 +20,7 @@ function CreatePlayer(id, x, y)
   p.oldState = false
   p.newState = false
   p.score = 0
-  p.scoreTimer = 0
+  p.scoreTimer = 100
   p.color = colors[p.colorIndex]
   p.color.a = 1
 
