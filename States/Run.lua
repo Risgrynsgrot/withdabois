@@ -20,7 +20,7 @@ state.Update = function(self, dt)
   
   for i,p in ipairs(PlayerManager.alivePlayers) do
     if p:GetPressed() then
-      p.vy = p.vy- 0.1
+      p.vy = p.vy- 0.2
       p:Jump()
     end
     
@@ -52,8 +52,8 @@ state.Draw = function(self)
   local camY = math.min(self.minY - 64, -height * 0.9)
   love.graphics.translate(0, -camY)
   local ly = camY
-  for i = 0, height, 64 do
-    local y = math.floor((ly + i)/ 64) * 64
+  for i = 0, height + 129, 128 do
+    local y = math.floor((ly + i)/ 128) * 128
     love.graphics.line(0, y, width, y)    
   end
   PlayerManager:Draw()
