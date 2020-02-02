@@ -44,9 +44,9 @@ function End()
             bestScoreIndex = k
         end
         p.x = (width / #PlayerManager:GetPlayers()) * (k-0.5)
-        p.y = height / 2 + timers[k] * 100
+        p.y = height / 2 + timers[k] * height/10
     end
-    PlayerManager:GetPlayers()[bestScoreIndex]:GiveScore()
+    PlayerManager:GetPlayers()[bestScoreIndex]:AddScore()
     ended = true
 end
 state.Update = function(self, dt)
@@ -85,8 +85,8 @@ state.Draw = function(self)
     if ended then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.line(0, height / 2, width, height / 2)
-        love.graphics.print("-5", 32, height / 6)
-        love.graphics.print("5", 32, height * 5 / 6)
+        love.graphics.print(" 5", 32, height*0.1, 0, 0.5, 0.5)
+        love.graphics.print("-5", 32, height*0.9, 0, 0.5, 0.5)
     end
     for k, p in ipairs(PlayerManager:GetPlayers()) do
         p:Draw()
