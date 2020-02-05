@@ -33,7 +33,8 @@ state.Pop = function(x, y, r, g, b)
 end
 
 state.OnEnter = function(self)
-  self.maxScale = 4 + love.math.random(8)
+  self.scale = {}
+  self.maxScale = 2 + love.math.random(5)
   self.highestValue = 0
   self.highestPlayer = {}
   self.popped = false
@@ -54,10 +55,10 @@ state.Update = function(self, dt)
 	  	if self.scale[k] < 0 then
 	  		self.scale[k] = 0
 	  	end
-	  	p.scale = p.scale + ((1+self.scale[k]/6) - p.scale) * 0.1
+	  	p.scale = p.scale + ((1+self.scale[k]/4) - p.scale) * 0.1
 	  	if p:GetPressed() then 
 	  		self.scale[k] = self.scale[k] + 1
-	  		p.scale = (1+(self.scale[k]+1)/6)
+	  		p.scale = (1+(self.scale[k]+1)/4)
 	  	end
 	  	if self.scale[k] > self.maxScale then 
         self.Pop(p.x, p.y, p.color.r, p.color.g, p.color.b)
